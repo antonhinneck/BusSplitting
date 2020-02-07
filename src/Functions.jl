@@ -9,13 +9,24 @@ function GenerateSplits!(W, dv; t = 0, Wv_last = Vector{Int8}())
             Wv = copy(Wv_last)
             push!(Wv, i)
             if t == 0
-                enum!(W, dv; t = t + 1, Wv_last = Wv)
+                GenerateSplits!(W, dv; t = t + 1, Wv_last = Wv)
             elseif Wv_last[t] >= i
-                enum!(W, dv; t = t + 1, Wv_last = Wv)
+                GenerateSplits!(W, dv; t = t + 1, Wv_last = Wv)
             end
         end
     end
 end
 
+function ω(Wv::Vector{Int8}, dv::Int8)
+    ω = Array{Int8, 1}(undef, dv)
+    for i in 1:dv ω[i] = 0 end
+    for i in 1:length(Wv) ω[Wv[i]] += 1 end
+    return ω
+end
+
 GenerateSplits!(W, dv)
+
+Ω = [ω(Wv, Int8(dv)) for Wv in W]
+
 W
+Ω
