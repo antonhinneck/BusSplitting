@@ -24,6 +24,8 @@ function ω(Wv::Vector{Int8}, dv::Int8)
     return ω
 end
 
+#function assignments
+
 GenerateSplits!(W, dv)
 
 Ω = [ω(Wv, Int8(dv)) for Wv in W]
