@@ -1,6 +1,8 @@
 using PyPlot
 using Colors
 
+cd(@__DIR__)
+
 fig = figure(figsize=(8, 3))
 rc("font", family = "serif", style = "italic", size = 14)
 rc("text", usetex = true)
