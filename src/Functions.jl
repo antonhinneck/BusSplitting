@@ -50,10 +50,37 @@ end
 
 #function assignments
 
-dv = 1
+dv = 6
 W = Vector{Vector{Int8}}()
 GenerateSplits!(W, dv)
 W
+
+assignments = Vector{Int16}()
+
+function generateAssignments!(assignments, groups, buses; t = 0)
+
+    if length(buses) == 0
+
+        
+
+    else
+        for (i, b) in enumerate(buses)
+            if t > 0
+                if b <= buses[t]
+                    new_buses = copy(buses)
+                    deleteat!(new_buses, i)
+                    generateAssignments!(assignments, groups, new_buses; t = t + 1)
+                end
+            end
+        else
+            if t == 0
+                new_buses = copy(buses)
+                deleteat!(new_buses, i)
+                generateAssignments!(assignments, groups, new_buses; t = t + 1)
+            end
+        end
+    end
+end
 
 
 time_ns()
