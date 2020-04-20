@@ -2,6 +2,10 @@ function solve_DCOPF(data)
 
     TS = Model()
 
+    set_optimizer(TS, with_optimizer(Gurobi.Optimizer))
+    #set_optimizer(TS, with_optimizer(Cbc.Optimizer, LogLevel = 2))
+    #set_optimizer(TS, with_optimizer(GLPK.Optimizer, msg_lev = 2))
+
     @variable(TS, generation[data.generators] >= 0)
     @variable(TS, theta[data.buses] >= 0)
     @variable(TS, power_flow_var[data.lines])
@@ -24,15 +28,14 @@ function solve_DCOPF(data)
     @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity[g])
 
     #Angle limits
-    @constraint(TS, theta_limit_1[n = data.buses], theta[n] <= pi)
+    @constraint(TS, theta_limit_1[n = data.buses], theta[n] <= 0.6)
+    @constraint(TS, theta_limit_2[n = data.buses], theta[n] >= -0.6)
 
     #Line limit
     @constraint(TS, power_flow_limit_1[l in data.lines], power_flow_var[l] <= data.line_capacity[l])
     @constraint(TS, power_flow_limit_2[l in data.lines], power_flow_var[l] >= -data.line_capacity[l])
 
-    set_optimizer(TS, with_optimizer(GLPK.Optimizer, msg_lev = 2))
     optimize!(TS)
-
 
     return objective_value(TS)
 end
