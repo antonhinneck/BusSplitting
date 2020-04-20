@@ -26,3 +26,14 @@ PowerGrids.splitBus!(case, 4)
 PowerGrids.splitBus!(case, 5)
 
 solve_DCOPF_OBSP(case)
+
+
+case.line_start
+
+
+
+
+
+
+
+case.line_end
