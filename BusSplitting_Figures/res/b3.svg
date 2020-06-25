@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0rc1 (09960d6f05, 2020-04-09)"
+   sodipodi:docname="b3.svg"
+   id="svg98"
+   version="1.1"
+   class="st10"
+   color-interpolation-filters="sRGB"
+   xml:space="preserve"
+   viewBox="0 0 110 50"
+   height="0.694445in"
+   width="1.52778in"><metadata
+   id="metadata104"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs102" /><sodipodi:namedview
+   inkscape:current-layer="svg98"
+   inkscape:window-maximized="0"
+   inkscape:window-y="0"
+   inkscape:window-x="0"
+   inkscape:cy="33.333361"
+   inkscape:cx="73.333443"
+   inkscape:zoom="1.6090885"
+   showgrid="false"
+   id="namedview100"
+   inkscape:window-height="480"
+   inkscape:window-width="820"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+	<v:documentProperties
+   v:viewMarkup="false"
+   v:langID="1033" />
+
+	<style
+   id="style2"
+   type="text/css">
+	<![CDATA[
+		.st1 {fill:#ffffff;stroke:none;stroke-width:0.25}
+		.st2 {stroke:#00b050;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st3 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st4 {fill:#000000;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st5 {stroke:#bfbfbf;stroke-linecap:butt;stroke-width:1}
+		.st6 {fill:#d8d8d8;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st7 {stroke:#7f7f7f;stroke-dasharray:2,1;stroke-linecap:butt;stroke-width:1}
+		.st8 {fill:#00b050;stroke:none;stroke-width:0.25}
+		.st9 {fill:#ffffff;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st10 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g
+   id="g96"
+   v:groupContext="foregroundPage"
+   v:index="1"
+   v:mID="0">
+		<title
+   id="title4">Page-1</title>
+		<v:pageProperties
+   v:shadowOffsetY="-9"
+   v:shadowOffsetX="9"
+   v:drawingUnits="0"
+   v:pageScale="1"
+   v:drawingScale="1" />
+		<g
+   v:groupContext="group"
+   v:mID="141"
+   transform="translate(1,-0.25)"
+   id="group141-1">
+			<title
+   id="title6">Sheet.141</title>
+			<g
+   transform="translate(1.79172E-05,0)"
+   v:groupContext="shape"
+   v:mID="135"
+   id="shape135-2">
+				<title
+   id="title8">Rectangle.135</title>
+				<v:userDefs>
+					<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+				</v:userDefs>
+				<rect
+   id="rect10"
+   class="st1"
+   height="49.5"
+   width="108"
+   y="0.500001"
+   x="0" />
+			</g>
+			<g
+   transform="translate(80.2049,-26.3329) rotate(31.6075)"
+   v:groupContext="shape"
+   v:mID="81"
+   id="shape81-4">
+				<title
+   id="title13">Sheet.81</title>
+				<desc
+   id="desc15">17</desc>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="0"
+   width="34.35"
+   cy="50"
+   cx="17.1724" />
+				<path
+   id="path17"
+   class="st2"
+   d="M0 50 L34.34 50" />
+				<rect
+   id="rect19"
+   class="st3"
+   height="10.6642"
+   width="6.0694"
+   y="44.9999"
+   x="14.1375"
+   v:rectContext="textBkgnd" />
+				<text
+   id="text21"
+   v:langID="1033"
+   class="st4"
+   y="52.5"
+   x="14.14"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />17</text>			</g>
+			<g
+   transform="translate(83.25,-15.75)"
+   v:groupContext="shape"
+   v:mID="82"
+   id="shape82-9">
+				<title
+   id="title24">Sheet.82</title>
+				<desc
+   id="desc26">5</desc>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="0"
+   width="24.75"
+   cy="50"
+   cx="12.375" />
+				<path
+   id="path28"
+   class="st5"
+   d="M0 50 L24.75 50" />
+				<rect
+   id="rect30"
+   class="st3"
+   height="10.6642"
+   width="3.10556"
+   y="44.9999"
+   x="10.8221"
+   v:rectContext="textBkgnd" />
+				<text
+   id="text32"
+   v:langID="1033"
+   class="st6"
+   y="52.5"
+   x="10.82"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />5</text>			</g>
+			<g
+   transform="translate(-1.45488,-8.3329) rotate(-31.6075)"
+   v:groupContext="shape"
+   v:mID="84"
+   id="shape84-14">
+				<title
+   id="title35">Sheet.84</title>
+				<desc
+   id="desc37">16</desc>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="0"
+   width="34.35"
+   cy="50"
+   cx="17.1724" />
+				<path
+   id="path39"
+   class="st7"
+   d="M0 50 L34.34 50" />
+				<rect
+   id="rect41"
+   class="st3"
+   height="10.6642"
+   width="6.25974"
+   y="44.9999"
+   x="14.0424"
+   v:rectContext="textBkgnd" />
+				<text
+   id="text43"
+   v:langID="1033"
+   class="st4"
+   y="52.5"
+   x="14.04"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />16</text>			</g>
+			<g
+   transform="translate(-6.98296E-13,-15.75)"
+   v:groupContext="shape"
+   v:mID="85"
+   id="shape85-19">
+				<title
+   id="title46">Sheet.85</title>
+				<desc
+   id="desc48">4</desc>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="0"
+   width="24.76"
+   cy="50"
+   cx="12.375" />
+				<path
+   id="path50"
+   class="st5"
+   d="M0 50 L24.75 50" />
+				<rect
+   id="rect52"
+   class="st3"
+   height="10.6642"
+   width="3.24207"
+   y="44.9999"
+   x="10.754"
+   v:rectContext="textBkgnd" />
+				<text
+   id="text54"
+   v:langID="1033"
+   class="st6"
+   y="52.5"
+   x="10.75"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />4</text>			</g>
+			<g
+   transform="translate(24.75,-15.75)"
+   v:groupContext="shape"
+   v:mID="87"
+   id="shape87-24">
+				<title
+   id="title57">Sheet.87</title>
+				<desc
+   id="desc59">18</desc>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="0"
+   width="58.5"
+   cy="50"
+   cx="29.25" />
+				<path
+   id="path61"
+   class="st2"
+   d="M0 50 L58.5 50" />
+				<rect
+   id="rect63"
+   class="st3"
+   height="10.6642"
+   width="6.21085"
+   y="44.9999"
+   x="26.1444"
+   v:rectContext="textBkgnd" />
+				<text
+   id="text65"
+   v:langID="1033"
+   class="st4"
+   y="52.5"
+   x="26.14"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />18</text>			</g>
+			<g
+   transform="translate(47.25,-27)"
+   v:groupContext="shape"
+   v:mID="88"
+   id="shape88-29">
+				<title
+   id="title68">Circle.88</title>
+				<desc
+   id="desc70">3</desc>
+				<v:userDefs>
+					<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+				</v:userDefs>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="10.125"
+   width="11.82"
+   cy="43.25"
+   cx="6.75" />
+				<path
+   id="path72"
+   class="st8"
+   d="M0 43.25 A6.75 6.75 0 0 1 13.5 43.25 A6.75 6.75 0 1 1 0 43.25 Z" />
+				<text
+   id="text74"
+   v:langID="1033"
+   class="st9"
+   y="45.75"
+   x="5.17"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />3</text>			</g>
+			<g
+   transform="translate(18,-8.99999)"
+   v:groupContext="shape"
+   v:mID="89"
+   id="shape89-32">
+				<title
+   id="title77">Circle.89</title>
+				<desc
+   id="desc79">11</desc>
+				<v:userDefs>
+					<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+				</v:userDefs>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="10.125"
+   width="11.82"
+   cy="43.25"
+   cx="6.75" />
+				<path
+   id="path81"
+   class="st8"
+   d="M0 43.25 A6.75 6.75 0 0 1 13.5 43.25 A6.75 6.75 0 1 1 0 43.25 Z" />
+				<text
+   id="text83"
+   v:langID="1033"
+   class="st9"
+   y="45.75"
+   x="3.87"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />11</text>			</g>
+			<g
+   transform="translate(76.5,-8.99999)"
+   v:groupContext="shape"
+   v:mID="90"
+   id="shape90-35">
+				<title
+   id="title86">Circle.90</title>
+				<desc
+   id="desc88">12</desc>
+				<v:userDefs>
+					<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+				</v:userDefs>
+				<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+				<v:textRect
+   height="10.125"
+   width="11.82"
+   cy="43.25"
+   cx="6.75" />
+				<path
+   id="path90"
+   class="st8"
+   d="M0 43.25 A6.75 6.75 0 0 1 13.5 43.25 A6.75 6.75 0 1 1 0 43.25 Z" />
+				<text
+   id="text92"
+   v:langID="1033"
+   class="st9"
+   y="45.75"
+   x="3.49"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />12</text>			</g>
+		</g>
+	</g>
+</svg>
