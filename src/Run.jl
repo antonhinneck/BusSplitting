@@ -5,11 +5,15 @@ using LightGraphs.SimpleGraphs: nv, ne
 using .PowerGrids
 
 datasources = PowerGrids.datasets()
-case = PowerGrids.readDataset(datasources[38]) # 5 Bus
-case0 = PowerGrids.readDataset(datasources[38]) # 5 Bus
+# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
+# case0 = PowerGrids.readDataset(datasources[38]) # 5 Bus
+case = PowerGrids.readDataset(datasources[2]) # 5 Bus
+case0 = PowerGrids.readDataset(datasources[2]) # 5 Bus
 ge = Gurobi.Env()
 THETAMAX = 0.6
 THETAMIN = -0.6
+
+case.line_capacity
 
 include("Model_LP.jl") # Change formulation, error
 lp = solve_LP(ge, case0)
@@ -18,6 +22,7 @@ lp_pf = lp[4]
 lp_gen = lp[6]
 lp_theta = lp[5]
 
+print(lp_obj)
 case.line_reactance
 
 # graph = PowerGrids.toGraph(case)
