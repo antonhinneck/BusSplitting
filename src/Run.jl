@@ -4,51 +4,128 @@ include("C:/Users/Anton Hinneck/juliaPackages/GitHub/PowerGrids.jl/src/PowerGrid
 using LightGraphs.SimpleGraphs: nv, ne
 using .PowerGrids
 
+function construct_initial_solution(data, solution)
+
+    x0 = zeros(length(data.lines))
+
+    #Iteratie through all sub grids
+    for sg in case.sub_grids
+        # Get lowest index bus bar
+        bus_bar = minimum(sg.bus_bars)
+        # Set state of root connection
+        x0[sg.bus_bar_root_line[bus_bar]] = 1.0
+        # Copy external states
+        for extLine in sg.externalLines
+            internal = sg.internalLineByBusBar[bus_bar][extLine]
+            x0[internal] = solution[extLine]
+        end
+    end
+
+    return x0
+end
+
 datasources = PowerGrids.datasets()
-# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
-# case0 = PowerGrids.readDataset(datasources[38]) # 5 Bus
-case = PowerGrids.readDataset(datasources[2]) # 5 Bus
-case0 = PowerGrids.readDataset(datasources[2]) # 5 Bus
 ge = Gurobi.Env()
 THETAMAX = 0.6
 THETAMIN = -0.6
 
-case.line_capacity
+include("Model_LP.jl")
+include("dcopf_otsp.jl")
+include("dcopf_obsp_change.jl")
+
+for (i, ds) in enumerate(datasources)
+    println(i, " ", ds)
+end
+
+# case = PowerGrids.readDataset(datasources[27]) # 30 Bus as
+# for l in case.lines case.line_capacity[l] *= 0.6 end
+#
+# case = PowerGrids.readDataset(datasources[28]) # 30 Bus fsr
+# for l in case.lines case.line_capacity[l] *= 0.8 end
+#
+# case = PowerGrids.readDataset(datasources[29]) # 30 Bus ieee
+# for l in case.lines case.line_capacity[l] *= 0.9 end
+#
+ # case = PowerGrids.readDataset(datasources[5]) # 14 Bus
+ # for l in case.lines case.line_capacity[l] *= 0.55 end
+#
+# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
+
+# case = PowerGrids.readDataset(datasources[2]) # 118 Bus ieee
+# for l in case.lines case.line_capacity[l] *= 0.74 end
+
+# case = PowerGrids.readDataset(datasources[36]) # 57 Bus ieee
+# for l in case.lines case.line_capacity[l] *= 0.3 end
+
+# case = PowerGrids.readDataset(datasources[15]) # 24 Bus ieee rts
+# for l in case.lines case.line_capacity[l] *= 0.5 end
+
+# case = PowerGrids.readDataset(datasources[11]) # 179 Bus goc
+# for l in case.lines case.line_capacity[l] *= 0.6 end
+
+#
+# case0 = PowerGrids.readDataset(datasources[38]) # 5 Bus
+
+#case = PowerGrids.readDataset(datasources[28]) # 30 Bus
+# case = PowerGrids.readDataset(datasources[29]) # 30 Bus
+#for l in case.lines case.line_capacity[l] *= 0.6 end
+# case = PowerGrids.readDataset(datasources[2]) # 5 Bus
+# case0 = PowerGrids.readDataset(datasources[2]) # 5 Bus
+
+case = PowerGrids.readDataset(datasources[15]) # 179 Bus goc
+for l in case.lines case.line_capacity[l] *= 0.5 end
 
 include("Model_LP.jl") # Change formulation, error
-lp = solve_LP(ge, case0)
+lp = solve_LP(ge, case)
 lp_obj = lp[3]
 lp_pf = lp[4]
 lp_gen = lp[6]
 lp_theta = lp[5]
 
-print(lp_obj)
-case.line_reactance
-
-# graph = PowerGrids.toGraph(case)
-
 include("dcopf_otsp.jl")
-otsp = solve_DCOPF_OTSP(case0)
+otsp = solve_DCOPF_OTSP(case)
 otsp_obj = otsp[1]
 otsp_pf = otsp[2] / 100
 otsp_gen = otsp[5] / 100
 otsp_theta = otsp[4]
+otsp_lineStatus = otsp[3]
+
+for i in 1:length(case.buses)
+    PowerGrids._splitBus!(case, i, 2)
+end
+
+#x0 = construct_initial_solution(case, otsp_lineStatus)
 
 include("dcopf_obsp_change.jl")
-line_status = solve_DCOPF_OBSP(case)[3]
-
 solve_DCOPF_OBSP(case)
+#line_status = solve_DCOPF_OBSP(case)[3]
 
-case.sub_grids[5]
-case.sub_grids[1]
-dfs_components(case, case.sub_grids[5], l_stat = line_status)
-case.sub_grids
+case = PowerGrids.readDataset(datasources[11]) # 30 Bus fsr
+for l in case.lines case.line_capacity[l] *= 0.6 end
+for i in 1:10
+    PowerGrids._splitBus!(case, i, 2)
+end
 
-PowerGrids.splitBus!(case, 1)
-PowerGrids.splitBus!(case, 2)
-PowerGrids.splitBus!(case, 3)
-PowerGrids.splitBus!(case, 4)
-PowerGrids.splitBus!(case, 5)
+
+case = PowerGrids.readDataset(datasources[28]) # 14 Bus
+for l in case.lines case.line_capacity[l] *= 0.50 end
+for b in 1:length(case.buses)
+    PowerGrids.splitBus!(case, b)
+end
+line_status = solve_DCOPF_OBSP(case)[3]
+datasources[36]
+datasources[5]
+include("dcopf_obsp_change.jl")
+case = PowerGrids.readDataset(datasources[36]) # 39 Bus
+for l in case.lines case.line_capacity[l] *= 0.8 end
+for b in 1:length(case.buses)
+    PowerGrids.splitBus!(case, b)
+end
+lp = solve_LP(ge, case)[3]
+otsp = solve_DCOPF_OTSP(case)[1]
+obsp = solve_DCOPF_OBSP(case)[1]
+
+println(string(lp," & ",otsp," & ", obsp, " & "))
 
 include("dcopf_obsp_change.jl")
 line_status = solve_DCOPF_OBSP(case)[3]

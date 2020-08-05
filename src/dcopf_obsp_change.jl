@@ -1,16 +1,20 @@
-function solve_DCOPF_OBSP(data)
+function solve_DCOPF_OBSP(data; x0 = nothing)
 
     M = 100000
 
     TS = Model()
-    set_optimizer(TS, with_optimizer(Gurobi.Optimizer))
+    set_optimizer(TS, with_optimizer(Gurobi.Optimizer, TimeLimit = 30))
     #set_optimizer(TS, with_optimizer(Cbc.Optimizer, LogLevel = 2))
     #set_optimizer(TS, with_optimizer(GLPK.Optimizer, msg_lev = 2))
 
     @variable(TS, generation[data.generators] >= 0)
     @variable(TS, theta[data.buses])
     @variable(TS, power_flow_var[data.lines])
-    @variable(TS, switched[data.lines], Bin)
+    if x0 != nothing
+        @variable(TS, switched[l = data.lines], Bin, start = x0[l])
+    else
+        @variable(TS, switched[l = data.lines; data.line_is_aux[l]], Bin)
+    end
 
     #Set angle at slack node
     JuMP.fix(theta[data.buses[1]], 0; force = true)
@@ -40,10 +44,12 @@ function solve_DCOPF_OBSP(data)
     @constraint(TS, theta_limit_2[n = data.buses], theta[n] >= -0.6)
 
     #Line limit
-    @constraint(TS, power_flow_limit_1[l in data.lines], power_flow_var[l] <= data.line_capacity[l] * switched[l])
-    @constraint(TS, power_flow_limit_2[l in data.lines], power_flow_var[l] >= -data.line_capacity[l] * switched[l])
+    @constraint(TS, power_flow_limit_1[l in data.lines; data.line_is_aux[l]], power_flow_var[l] <= data.line_capacity[l] * switched[l])
+    @constraint(TS, power_flow_limit_2[l in data.lines; data.line_is_aux[l]], power_flow_var[l] >= -data.line_capacity[l] * switched[l])
 
     optimize!(TS)
+
+    lineStateDict = Dict{Int64, Int64}()
 
     return objective_value(TS), value.(TS[:power_flow_var]).data, value.(TS[:switched]).data, value.(TS[:theta]).data, value.(TS[:generation]).data
 end
