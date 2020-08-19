@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generiert durch Microsoft Visio, SVG Export b11.svg Zeichenblatt-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="1.00694in" height="1.00694in"
+		viewBox="0 0 72.5 72.5" xml:space="preserve" color-interpolation-filters="sRGB" class="st8">
+	<v:documentProperties v:langID="1033" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st2 {fill:#ffffff;fill-opacity:0.75;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st3 {fill:#000000;font-family:Microsoft Uighur;font-size:0.666664em}
+		.st4 {stroke:#bfbfbf;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st5 {fill:#bfbfbf;font-family:Microsoft Uighur;font-size:0.666664em}
+		.st6 {fill:#000000;stroke:none;stroke-width:0.25}
+		.st7 {fill:#ffffff;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st8 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Zeichenblatt-1</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="0" v:shadowOffsetX="9" v:shadowOffsetY="-9"/>
+		<g id="group653-1" transform="translate(0.25,-0.25)" v:mID="653" v:groupContext="group">
+			<title>Tabelle.653</title>
+			<g id="shape593-2" v:mID="593" v:groupContext="shape" transform="translate(-20.1758,-33.0646) rotate(-21.8014)">
+				<title>Tabelle.593</title>
+				<desc>13</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="12.1166" cy="72.5" width="24.24" height="0"/>
+				<path d="M0 72.5 L24.23 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="9.7045" y="68.4999" width="4.82437" height="8.53116" class="st2"/>
+				<text x="9.7" y="74.5" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>13</text>			</g>
+			<g id="shape595-7" v:mID="595" v:groupContext="shape" transform="translate(44.0509,-27.9182) rotate(30.9638)">
+				<title>Tabelle.595</title>
+				<desc>14</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="13.1196" cy="72.5" width="26.24" height="0"/>
+				<path d="M0 72.5 L26.24 72.5" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="10.6721" y="68.4999" width="4.89468" height="8.53116" class="st2"/>
+				<text x="10.67" y="74.5" class="st5" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>14</text>			</g>
+			<g id="shape590-12" v:mID="590" v:groupContext="shape" transform="translate(0,-31.5)">
+				<title>Circle.590</title>
+				<desc>1</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.31" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>			</g>
+			<g id="shape599-15" v:mID="599" v:groupContext="shape" transform="translate(-16.0404,-31.363) rotate(-38.6598)">
+				<title>Tabelle.599</title>
+				<desc>7</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.407" cy="72.5" width="28.82" height="0"/>
+				<path d="M0 72.5 L28.81 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="13.1298" y="68.4999" width="2.5546" height="8.53116" class="st2"/>
+				<text x="13.13" y="74.5" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>7</text>			</g>
+			<g id="shape600-20" v:mID="600" v:groupContext="shape" transform="translate(50.8749,-43.9498) rotate(17.354)">
+				<title>Tabelle.600</title>
+				<desc>8</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="18.8584" cy="72.5" width="37.72" height="0"/>
+				<path d="M0 72.5 L37.72 72.5" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="17.5243" y="68.4999" width="2.66803" height="8.53116" class="st2"/>
+				<text x="17.52" y="74.5" class="st5" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>8</text>			</g>
+			<g id="shape602-25" v:mID="602" v:groupContext="shape" transform="translate(-34.1264,12.5409) rotate(-60.9454)">
+				<title>Tabelle.602</title>
+				<desc>10</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="23.1652" cy="72.5" width="46.34" height="0"/>
+				<path d="M0 72.5 L46.33 72.5" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="20.6222" y="68.4999" width="5.08585" height="8.53116" class="st2"/>
+				<text x="20.62" y="74.5" class="st5" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>10</text>			</g>
+			<g id="shape603-30" v:mID="603" v:groupContext="shape" transform="translate(7.62506,-21.4498) rotate(-17.354)">
+				<title>Tabelle.603</title>
+				<desc>11</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="18.8584" cy="72.5" width="37.72" height="0"/>
+				<path d="M0 72.5 L37.72 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="16.5575" y="68.4999" width="4.60162" height="8.53116" class="st2"/>
+				<text x="16.56" y="74.5" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>11</text>			</g>
+			<g id="shape604-35" v:mID="604" v:groupContext="shape" transform="translate(74.5404,-8.86299) rotate(38.6598)">
+				<title>Tabelle.604</title>
+				<desc>12</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.407" cy="72.5" width="28.82" height="0"/>
+				<path d="M0 72.5 L28.81 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="11.7957" y="68.4999" width="5.22263" height="8.53116" class="st2"/>
+				<text x="11.8" y="74.5" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>12</text>			</g>
+			<g id="shape596-40" v:mID="596" v:groupContext="shape" transform="translate(58.5,-29.25)">
+				<title>Circle.596</title>
+				<desc>7</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.15" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>7</text>			</g>
+			<g id="shape597-43" v:mID="597" v:groupContext="shape" transform="translate(45,-58.5)">
+				<title>Circle.597</title>
+				<desc>6</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.06" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>6</text>			</g>
+			<g id="shape601-46" v:mID="601" v:groupContext="shape" transform="translate(92.6264,-9.95911) rotate(60.9454)">
+				<title>Tabelle.601</title>
+				<desc>9</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="23.1652" cy="72.5" width="46.34" height="0"/>
+				<path d="M0 72.5 L46.33 72.5" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="21.8782" y="68.4999" width="2.5741" height="8.53116" class="st2"/>
+				<text x="21.88" y="74.5" class="st5" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>9</text>			</g>
+			<g id="shape591-51" v:mID="591" v:groupContext="shape" transform="translate(22.5,-40.5)">
+				<title>Circle.591</title>
+				<desc>9</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.14" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>9</text>			</g>
+			<g id="shape598-54" v:mID="598" v:groupContext="shape" transform="translate(45,1.42109E-14)">
+				<title>Circle.598</title>
+				<desc>8</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.08" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>8</text>			</g>
+			<g id="shape594-57" v:mID="594" v:groupContext="shape" transform="translate(22.5,-18)">
+				<title>Circle.594</title>
+				<desc>10</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="3.57" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>10</text>			</g>
+		</g>
+	</g>
+</svg>

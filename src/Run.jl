@@ -1,30 +1,10 @@
-using JuMP, Gurobi
+using JuMP, Gurobi, MathOptInterface.Utilities
 using MathOptInterface ## Cbc, GLPK, HTTP, JSON
 include("C:/Users/Anton Hinneck/juliaPackages/GitHub/PowerGrids.jl/src/PowerGrids.jl")
 using LightGraphs.SimpleGraphs: nv, ne
 using .PowerGrids
 
-function construct_initial_solution(data, solution)
-
-    x0 = zeros(length(data.lines))
-
-    #Iteratie through all sub grids
-    for sg in case.sub_grids
-        # Get lowest index bus bar
-        bus_bar = minimum(sg.bus_bars)
-        # Set state of root connection
-        x0[sg.bus_bar_root_line[bus_bar]] = 1.0
-        # Copy external states
-        for extLine in sg.externalLines
-            internal = sg.internalLineByBusBar[bus_bar][extLine]
-            x0[internal] = solution[extLine]
-        end
-    end
-
-    return x0
-end
-
-datasources = PowerGrids.datasets()
+datasources = datasets()
 ge = Gurobi.Env()
 THETAMAX = 0.6
 THETAMIN = -0.6
@@ -33,9 +13,9 @@ include("Model_LP.jl")
 include("dcopf_otsp.jl")
 include("dcopf_obsp_change.jl")
 
-for (i, ds) in enumerate(datasources)
-    println(i, " ", ds)
-end
+# for (i, ds) in enumerate(datasources)
+#     println(i, " ", ds)
+# end
 
 # case = PowerGrids.readDataset(datasources[27]) # 30 Bus as
 # for l in case.lines case.line_capacity[l] *= 0.6 end
@@ -63,17 +43,17 @@ end
 # case = PowerGrids.readDataset(datasources[11]) # 179 Bus goc
 # for l in case.lines case.line_capacity[l] *= 0.6 end
 
-#
-# case0 = PowerGrids.readDataset(datasources[38]) # 5 Bus
+# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
 
 #case = PowerGrids.readDataset(datasources[28]) # 30 Bus
+
 # case = PowerGrids.readDataset(datasources[29]) # 30 Bus
 #for l in case.lines case.line_capacity[l] *= 0.6 end
-# case = PowerGrids.readDataset(datasources[2]) # 5 Bus
-# case0 = PowerGrids.readDataset(datasources[2]) # 5 Bus
 
-case = PowerGrids.readDataset(datasources[15]) # 179 Bus goc
-for l in case.lines case.line_capacity[l] *= 0.5 end
+# case = readDataset(datasources[38]) # 5 Bus
+
+case = PowerGrids.readDataset(datasources[2]) # 118 Bus ieee
+for l in case.lines case.line_capacity[l] *= 0.74 end
 
 include("Model_LP.jl") # Change formulation, error
 lp = solve_LP(ge, case)
@@ -94,47 +74,18 @@ for i in 1:length(case.buses)
     PowerGrids._splitBus!(case, i, 2)
 end
 
-#x0 = construct_initial_solution(case, otsp_lineStatus)
+x0 = split_build_x0(case, otsp[3])
 
-include("dcopf_obsp_change.jl")
-solve_DCOPF_OBSP(case)
-#line_status = solve_DCOPF_OBSP(case)[3]
+case.sub_grids
 
-case = PowerGrids.readDataset(datasources[11]) # 30 Bus fsr
-for l in case.lines case.line_capacity[l] *= 0.6 end
-for i in 1:10
-    PowerGrids._splitBus!(case, i, 2)
-end
+include("dcopf_obsp_notheta.jl")
+line_status = solve_DCOPF_OBSP(case, x0 = x0, split = 850)
 
-
-case = PowerGrids.readDataset(datasources[28]) # 14 Bus
-for l in case.lines case.line_capacity[l] *= 0.50 end
-for b in 1:length(case.buses)
-    PowerGrids.splitBus!(case, b)
-end
-line_status = solve_DCOPF_OBSP(case)[3]
-datasources[36]
-datasources[5]
-include("dcopf_obsp_change.jl")
-case = PowerGrids.readDataset(datasources[36]) # 39 Bus
-for l in case.lines case.line_capacity[l] *= 0.8 end
-for b in 1:length(case.buses)
-    PowerGrids.splitBus!(case, b)
-end
-lp = solve_LP(ge, case)[3]
-otsp = solve_DCOPF_OTSP(case)[1]
-obsp = solve_DCOPF_OBSP(case)[1]
-
-println(string(lp," & ",otsp," & ", obsp, " & "))
-
-include("dcopf_obsp_change.jl")
-line_status = solve_DCOPF_OBSP(case)[3]
-
-case = PowerGrids.readDataset(datasources[38])
+# include("dcopf_obsp_change.jl")
+# line_status = solve_DCOPF_OBSP(case, x0 = x0)
 
 function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_stat = nothing) # TODO: op_status
 
-    l_stat = round.(l_stat)
     visited = fill(false, length(sg.buses))
     visited_lines = Vector{Int64}()
     all_visited = false
@@ -142,7 +93,7 @@ function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_sta
     connected_buses = [sg.root_bus]
     iter = 0
 
-    while !all_visited && iter < 3
+    while !all_visited #&& iter < 3
 
         for i in 1:length(visited)
             if !visited[i]
@@ -150,7 +101,8 @@ function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_sta
                 break
             end
         end
-        _sg = PowerGrids.sub_grid(connected_buses[1], Vector{Int64}(), Vector{Int64}())
+
+        _sg = PowerGrids.sub_grid(connected_buses[1], Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Dict{Int64, Int64}(), Dict{Int64, Dict{Int64, Int64}}())
 
         while length(connected_buses) > 0
 
@@ -158,7 +110,7 @@ function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_sta
             for b in connected_buses
                 push!(_sg.buses, b)
                 for l in pg.lines_at_bus[b]
-                    if l in Set(sg.lines) && !(l in Set(visited_lines)) && l_stat[l] == 1.0
+                    if l in Set(sg.lines) && !(l in Set(visited_lines)) && round(l_stat[l]) == 1.0
                         if !(l in Set(visited_lines))
                             if pg.line_start[l] == b
                                 push!(new_buses, pg.line_end[l])
@@ -188,73 +140,20 @@ function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_sta
             end
         end
         iter += 1
-        push!(components, _sg)
+        #push!(components, _sg)
+        single_connector = false
+        if length(_sg.buses) == 1
+            if (pg.bus_type[_sg.buses[1]] == 3)
+                single_connector = true
+            end
+        end
+
+        if length(_sg.buses) > 1 || single_connector
+            push!(components, _sg)
+        end
     end
 
     return components
-end
-
-function redirect_line(pg::PowerGrids.PowerGrid, line_id, fbus, tbus)
-
-    @inline function swap_tb_fb()
-        tmp = deepcopy(tbus)
-        tbus = deepcopy(fbus)
-        fbus = deepcopy(tmp)
-    end
-
-    fbus_is_new = false
-    tbus_is_new = false
-
-    if fbus == pg.line_start[line_id] || fbus == pg.line_end[line_id] tbus_is_new = true end
-    if tbus == pg.line_start[line_id] || tbus == pg.line_end[line_id] tbus_is_new = true end
-
-    if !((tbus_is_new && fbus_is_new) || (tbus == fbus))
-
-        fbus_old = pg.line_end[line_id]
-        tbus_old = pg.line_start[line_id]
-
-        if fbus != fbus_old
-            pg.line_start[line_id] = fbus
-            if fbus_old in Set(pg.lines_start_at_bus)
-                idx = indexin(line_id, pg.lines_start_at_bus[fbus_old])[]
-                deleteat!(pg.lines_start_at_bus[fbus_old], idx)
-            end
-            if fbus_old in Set(pg.lines_at_bus)
-                idx = indexin(line_id, pg.lines_at_bus[fbus_old])[]
-                deleteat!(pg.lines_at_bus[fbus_old], idx)
-            end
-        end
-
-        if tbus != tbus_old
-            pg.line_end[line_id] = tbus
-            if tbus_old in Set(pg.lines_end_at_bus)
-                idx = indexin(line_id, pg.lines_end_at_bus[tbus_old])[]
-                deleteat!(pg.lines_end_at_bus[tbus_old], idx)
-            end
-            if tbus_old in Set(pg.lines_at_bus)
-                idx = indexin(line_id, pg.lines_at_bus[tbus_old])[]
-                deleteat!(pg.lines_at_bus[tbus_old], idx)
-            end
-        end
-    else
-        print("No changes made: Choose tbus and fbus to be different and assign new values.")
-    end
-end
-
-function newBus!(pg::PowerGrid; demand = 0.0, root = 0)
-    nb = length(pg.buses)
-    id = pg.buses[nb] + 1
-    push!(pg.buses, id)
-    push!(pg.bus_decomposed, false)
-    push!(pg.bus_demand, id => demand)
-    push!(pg.bus_is_root, true)
-    push!(pg.lines_at_bus, id => Vector{Int64}())
-    push!(pg.lines_start_at_bus, id => Vector{Int64}())
-    push!(pg.lines_end_at_bus, id => Vector{Int64}())
-    push!(pg.adjacent_nodes, Vector{Int64}())
-    push!(pg.generators_at_bus, id => Vector{Int64}())
-    push!(pg.root_bus, id => root)
-    return id
 end
 
 function reduce_grid(pg::PowerGrids.PowerGrid, pg_id::Int64, l_stat)
@@ -283,14 +182,16 @@ function reduce_grid(pg::PowerGrids.PowerGrid, pg_id::Int64, l_stat)
                     obid = pg.root_bus[c.root_bus]
 
                     for l in connected_lines
+
                         if reset_case.line_start[l] == obid
-                            redirect_line(reset_case, l, nbid, reset_case.line_end[l])
+                            update_line(reset_case, l, nbid, pg.line_end[l])
                         elseif reset_case.line_end[l] == obid
-                            redirect_line(reset_case, l, reset_case.line_start[l], nbid)
+                            update_line(reset_case, l, pg.line_start[l], nbid, update_fbus = false)
                         else
                             print("Line has no matching start or end.")
                         end
                     end
+                    #println(reset_case.lines_at_bus)
                 end
             end
         end
@@ -301,25 +202,51 @@ function reduce_grid(pg::PowerGrids.PowerGrid, pg_id::Int64, l_stat)
     return reset_case
 end
 
-new = reduce_grid(case, 38, line_status)
+for l in 7:14
+    if case.line_is_aux[l]
+        println(l," ",x0[l])
+    end
+end
 
 case.sub_grids
 
-for sg in case.sub_grids
-    println(sg)
+new = reduce_grid(case, 2, line_status[3])
+
+new
+
+case.sub_grids[87]
+
+function pl(case, id, line_status)
+    if !case.line_is_aux[id]
+        stat = 1
+    else
+        stat = line_status[3][id]
+    end
+    println("Id: ",id," Stat:", line_status[3][id], " fbus:", case.line_start[id], " tbus:", case.line_end[id], " flow:", line_status[2][id], " type:", case.line_is_aux[id])
 end
 
-# case = PowerGrids.readDataset(datasources[38])
-# PowerGrids.splitBus!(case, 1)
-# PowerGrids.splitBus!(case, 2)
-# PowerGrids.splitBus!(case, 3)
-# PowerGrids.splitBus!(case, 4)
-# PowerGrids.splitBus!(case, 5)
+case.sub_grids[87]
+components = dfs_components(case, case.sub_grids[87], l_stat = line_status[3])
+case.lines_at_bus[573]
+case.bus_type[573]
+line_status[3][926]
 
-include("dcopf_obsp_change.jl")
-line_status = solve_DCOPF_OBSP(case)[3]
+println("----")
+for i in 923:926
+    pl(case, i, line_status)
+end
 
-components = dfs_components(case, case.sub_grids[4], l_stat = line_status)
+for b in 1:length(new.lines_at_bus)
+    if length(new.lines_at_bus[b]) == 0
+        println(b)
+    end
+end
+
+case.line_is_aux
+new.lines_at_bus
+components = dfs_components(case, case.sub_grids[1], l_stat = line_status[3])
+
+new.sub_grids
 
 include("Model_LP.jl") # Change formulation, error
 obsp = solve_LP(ge, new)
@@ -328,8 +255,7 @@ obsp_pf = obsp[4]
 obsp_gen = obsp[6]
 obsp_theta = obsp[5]
 
-
-for i in 1:6
+for i in 199:206
     println(lp_pf[i]," & ",otsp_pf[i]," & ",obsp_pf[i]," \\\\ ")
 end
 
@@ -354,3 +280,23 @@ end
 case0.generators_at_bus[4]
 
 case0.bus_demand
+
+function construct_initial_solution(data, solution)
+
+    x0 = zeros(length(data.lines))
+
+    #Iteratie through all sub grids
+    for sg in case.sub_grids
+        # Get lowest index bus bar
+        bus_bar = minimum(sg.bus_bars)
+        # Set state of root connection
+        x0[sg.bus_bar_root_line[bus_bar]] = 1.0
+        # Copy external states
+        for extLine in sg.externalLines
+            internal = sg.internalLineByBusBar[bus_bar][extLine]
+            x0[internal] = solution[extLine]
+        end
+    end
+
+    return x0
+end

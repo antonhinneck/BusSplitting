@@ -1,10 +1,12 @@
 function solve_LP(grb_env, data; threads = 1)
 
-    TS = Model(optimizer_with_attributes(() -> Gurobi.Optimizer(grb_env), "Threads" => threads,  "OutputFlag" => 0))
+    TS = Model(optimizer_with_attributes(() -> Gurobi.Optimizer(grb_env), "Threads" => 16,  "OutputFlag" => 1))
 
     @variable(TS, generation[data.generators] >= 0)
     @variable(TS, theta[data.buses])
     @variable(TS, power_flow_var[data.lines])
+
+    JuMP.fix(theta[data.buses[1]], 0; force = true)
 
     #Minimal generation costs
     @objective(TS, Min, sum(data.generator_costs[g] * generation[g] * data.base_mva for g in data.generators))
