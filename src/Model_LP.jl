@@ -9,26 +9,26 @@ function solve_LP(grb_env, data; threads = 1)
     JuMP.fix(theta[data.buses[1]], 0; force = true)
 
     #Minimal generation costs
-    @objective(TS, Min, sum(data.generator_costs[g] * generation[g] * data.base_mva for g in data.generators))
+    @objective(TS, Min, sum(data.generator_c1[g] * generation[g] * data.baseMVA for g in data.generators))
 
     #Current law
     @constraint(TS, market_clearing[n = data.buses],
-    sum(generation[g] for g in data.generators_at_bus[n]) + sum(power_flow_var[l] for l in data.lines_start_at_bus[n]) - sum(power_flow_var[l] for l in data.lines_end_at_bus[n]) == data.bus_demand[n] / data.base_mva)
+    sum(generation[g] for g in data.generators_at_bus[n]) + sum(power_flow_var[l] for l in data.lines_start_at_bus[n]) - sum(power_flow_var[l] for l in data.lines_end_at_bus[n]) == data.bus_demand[n] / data.baseMVA)
 
     #Voltage law
     @constraint(TS, voltage_1[l = data.lines],
     (data.base_mva / data.line_reactance[l]) * (theta[data.line_start[l]] - theta[data.line_end[l]]) == power_flow_var[l])
 
     #Capacity constraint
-    @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity[g] / data.base_mva)
+    @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity[g] / data.baseMVA)
 
     #Angle limits
     @constraint(TS, theta_limit1[n = data.buses], theta[n] <= THETAMAX)
     @constraint(TS, theta_limit2[n = data.buses], theta[n] >= THETAMIN)
 
     #Line limit
-    zeta1 = @constraint(TS, power_flow_limit_1[l in data.lines], power_flow_var[l] <= data.line_capacity[l] / data.base_mva)
-    zeta2 = @constraint(TS, power_flow_limit_2[l in data.lines], power_flow_var[l] >= -data.line_capacity[l] / data.base_mva)
+    zeta1 = @constraint(TS, power_flow_limit_1[l in data.lines], power_flow_var[l] <= data.line_capacity[l] / data.baseMVA)
+    zeta2 = @constraint(TS, power_flow_limit_2[l in data.lines], power_flow_var[l] >= -data.line_capacity[l] / data.baseMVA)
 
     optimize!(TS)
     grb_model = backend(TS).optimizer.model.inner

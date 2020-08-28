@@ -51,8 +51,10 @@ include("dcopf_obsp_change.jl")
 #for l in case.lines case.line_capacity[l] *= 0.6 end
 
 # case = readDataset(datasources[38]) # 5 Bus
-
-case = PowerGrids.readDataset(datasources[2]) # 118 Bus ieee
+set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
+csv_cases(verbose = true)
+select_csv_case(3)
+case = PowerGrids.loadCase() # 118 Bus ieee
 for l in case.lines case.line_capacity[l] *= 0.74 end
 
 include("Model_LP.jl") # Change formulation, error
