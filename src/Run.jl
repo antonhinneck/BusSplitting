@@ -4,7 +4,6 @@ include("C:/Users/Anton Hinneck/juliaPackages/GitHub/PowerGrids.jl/src/PowerGrid
 using LightGraphs.SimpleGraphs: nv, ne
 using .PowerGrids
 
-datasources = datasets()
 ge = Gurobi.Env()
 THETAMAX = 0.6
 THETAMIN = -0.6
@@ -51,9 +50,10 @@ include("dcopf_obsp_change.jl")
 #for l in case.lines case.line_capacity[l] *= 0.6 end
 
 # case = readDataset(datasources[38]) # 5 Bus
-set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
+
+#set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
 csv_cases(verbose = true)
-select_csv_case(3)
+PowerGrids.select_csv_case(3)
 case = PowerGrids.loadCase() # 118 Bus ieee
 for l in case.lines case.line_capacity[l] *= 0.74 end
 
@@ -65,7 +65,7 @@ lp_gen = lp[6]
 lp_theta = lp[5]
 
 include("dcopf_otsp.jl")
-otsp = solve_DCOPF_OTSP(case)
+otsp = solve_DCOPF_OTSP(case, start = false)
 otsp_obj = otsp[1]
 otsp_pf = otsp[2] / 100
 otsp_gen = otsp[5] / 100
@@ -76,12 +76,16 @@ for i in 1:length(case.buses)
     PowerGrids._splitBus!(case, i, 2)
 end
 
-x0 = split_build_x0(case, otsp[3])
+x0_otsp = split_build_x0(case, otsp[3])
+x0_lp = split_build_x0(case)
 
 case.sub_grids
 
 include("dcopf_obsp_notheta.jl")
-line_status = solve_DCOPF_OBSP(case, x0 = x0, split = 850)
+line_status = solve_DCOPF_OBSP(case, x0 = x0_otsp, split = 600)
+line_status = solve_DCOPF_OBSP(case, x0 = x0_lp)
+
+1 = 1
 
 # include("dcopf_obsp_change.jl")
 # line_status = solve_DCOPF_OBSP(case, x0 = x0)

@@ -4,7 +4,7 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     M2 = 2 * THETAMAX
 
     TS = Model()
-    set_optimizer(TS, with_optimizer(Gurobi.Optimizer, TimeLimit = 45))
+    set_optimizer(TS, with_optimizer(Gurobi.Optimizer, TimeLimit = 600))
 
     @variable(TS, generation[data.generators] >= 0)
     @variable(TS, theta[data.buses])
@@ -23,7 +23,7 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     JuMP.fix(theta[data.buses[1]], 0; force = true)
 
     #Minimal generation costs
-    @objective(TS, Min, sum(data.generator_costs[g] * generation[g] for g in data.generators))
+    @objective(TS, Min, sum(data.generator_c1[g] * generation[g] for g in data.generators))
 
     #Current law
     @constraint(TS, market_clearing[n = data.buses],
@@ -52,7 +52,7 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     theta[data.line_start[l]] + (1 - switched[l]) * M2 >= theta[data.line_end[l]])
 
     #Capacity constraint
-    @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity[g])
+    @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity_max[g])
 
     #Angle limits
     @constraint(TS, theta_limit_1[n = data.buses], theta[n] <= THETAMAX)
