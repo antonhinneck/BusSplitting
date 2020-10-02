@@ -53,7 +53,7 @@ include("dcopf_obsp_change.jl")
 
 #set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
 csv_cases(verbose = true)
-PowerGrids.select_csv_case(3)
+PowerGrids.select_csv_case(48)
 case = PowerGrids.loadCase() # 118 Bus ieee
 for l in case.lines case.line_capacity[l] *= 0.74 end
 
@@ -73,18 +73,28 @@ otsp_theta = otsp[4]
 otsp_lineStatus = otsp[3]
 
 for i in 1:length(case.buses)
-    PowerGrids._splitBus!(case, i, 2)
+    #PowerGrids._splitBus!(case, i, 2)
+    PowerGrids.__splitBus!(case, i, 2)
 end
+
+case.sub_grids
+
+case.generators_at_bus[12]
 
 x0_otsp = split_build_x0(case, otsp[3])
 x0_lp = split_build_x0(case)
 
 case.sub_grids
 
+include("dcopf_obsp_notheta2.jl")
+line_status = solve_DCOPF_OBSP2(case)
+
 include("dcopf_obsp_notheta.jl")
+line_status = solve_DCOPF_OBSP(case)
 line_status = solve_DCOPF_OBSP(case, x0 = x0_otsp, split = 600)
 line_status = solve_DCOPF_OBSP(case, x0 = x0_lp)
 
+case.generators_at_bus[10]
 1 = 1
 
 # include("dcopf_obsp_change.jl")

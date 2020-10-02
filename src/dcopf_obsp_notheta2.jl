@@ -1,4 +1,4 @@
-function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
+function solve_DCOPF_OBSP2(data; x0 = nothing, split = nothing)
 
     M = 10000
     M2 = 2 * THETAMAX
@@ -6,8 +6,17 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     TS = Model()
     set_optimizer(TS, with_optimizer(Gurobi.Optimizer, TimeLimit = 180))
 
+    buses = Vector{Int64}()
+    for b in data.buses
+        if data.bus_type[b] != 1
+            push!(buses, b)
+        end
+    end
+
+    print(buses)
+
     @variable(TS, generation[data.generators] >= 0)
-    @variable(TS, theta[n = data.buses])
+    @variable(TS, theta[n = buses])
     @variable(TS, power_flow_var[data.lines])
     @variable(TS, switched[l = data.lines; data.line_is_aux[l]], Bin)
 
@@ -26,7 +35,7 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     @objective(TS, Min, sum(data.generator_c1[g] * generation[g] for g in data.generators))
 
     #Current law
-    @constraint(TS, market_clearing[n = data.buses],
+    @constraint(TS, market_clearing[n = buses],
     sum(generation[g] for g in data.generators_at_bus[n]) + sum(power_flow_var[l] for l in data.lines_start_at_bus[n]) - sum(power_flow_var[l] for l in data.lines_end_at_bus[n]) == data.bus_demand[n])
 
     #Voltage law
@@ -36,11 +45,11 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     @constraint(TS, voltage_2[l = data.lines; data.line_is_aux[l]],
     (data.base_mva / data.line_reactance[l]) * (theta[data.line_start[l]] - theta[data.line_end[l]]) <= power_flow_var[l] + (1 - switched[l]) * M)
 
-    # @constraint(TS, voltage[l = data.lines; !data.line_is_aux[l]],
-    # (data.base_mva / data.line_reactance[l]) * (theta[data.line_start[l]] - theta[data.line_end[l]]) == power_flow_var[l])
+    @constraint(TS, voltage[l = data.lines; !data.line_is_aux[l]],
+    (data.base_mva / data.line_reactance[l]) * (theta[data.line_start[l]] - theta[data.line_end[l]]) == power_flow_var[l])
 
-    # @constraint(TS, connectors[b = data.buses; data.bus_type[b] == 3],
-    # sum(switched[l] for l in data.lines_at_bus[b] if data.line_is_aux[l]) <= 1)
+    @constraint(TS, connectors[b = data.buses; data.bus_type[b] == 3],
+    sum(switched[l] for l in data.lines_at_bus[b] if data.line_is_aux[l]) <= 1)
     # #
     # @constraint(TS, root_lines[b = data.buses; data.bus_is_root[b] && data.bus_decomposed[b]],
     # sum(switched[l] for l in data.lines_at_bus[b] if data.line_is_aux[l]) >= 1)
@@ -55,8 +64,8 @@ function solve_DCOPF_OBSP(data; x0 = nothing, split = nothing)
     @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity_max[g])
 
     #Angle limits
-    @constraint(TS, theta_limit_1[n = data.buses], theta[n] <= THETAMAX)
-    @constraint(TS, theta_limit_2[n = data.buses], theta[n] >= THETAMIN)
+    @constraint(TS, theta_limit_1[n = buses], theta[n] <= THETAMAX)
+    @constraint(TS, theta_limit_2[n = buses], theta[n] >= THETAMIN)
 
     # #Line limit
     @constraint(TS, power_flow_limit_1[l in data.lines; data.line_is_aux[l]], power_flow_var[l] <= data.line_capacity[l] * switched[l])
