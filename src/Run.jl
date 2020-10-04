@@ -55,7 +55,7 @@ include("dcopf_obsp_change.jl")
 csv_cases(verbose = true)
 PowerGrids.select_csv_case(48)
 case = PowerGrids.loadCase() # 118 Bus ieee
-for l in case.lines case.line_capacity[l] *= 0.74 end
+#for l in case.lines case.line_capacity[l] *= 0.74 end
 
 include("Model_LP.jl") # Change formulation, error
 lp = solve_LP(ge, case)
@@ -73,7 +73,7 @@ otsp_theta = otsp[4]
 otsp_lineStatus = otsp[3]
 
 for i in 1:length(case.buses)
-    #PowerGrids._splitBus!(case, i, 2)
+    # PowerGrids._splitBus!(case, i, 2)
     PowerGrids.__splitBus!(case, i, 2)
 end
 
@@ -88,6 +88,8 @@ case.sub_grids
 
 include("dcopf_obsp_notheta2.jl")
 line_status = solve_DCOPF_OBSP2(case)
+
+case.sub_grids
 
 include("dcopf_obsp_notheta.jl")
 line_status = solve_DCOPF_OBSP(case)
