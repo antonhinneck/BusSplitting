@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generiert durch Microsoft Visio, SVG Export otspobsp.svg Zeichenblatt-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="3.31944in" height="1.00694in"
+		viewBox="0 0 239 72.5" xml:space="preserve" color-interpolation-filters="sRGB" class="st12">
+	<v:documentProperties v:langID="1033" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {stroke:#000000;stroke-width:1}
+		.st2 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st3 {fill:#000000;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st4 {fill:#ffffff;stroke:none;stroke-linecap:butt}
+		.st5 {stroke:#000000;stroke-dasharray:0.01,5;stroke-width:1}
+		.st6 {fill:#000000;stroke:none;stroke-width:0.25}
+		.st7 {fill:#ffffff;font-family:Microsoft Uighur;font-size:0.833336em}
+		.st8 {fill:#ffffff;stroke:#000000;stroke-width:1}
+		.st9 {fill:#ffffff;stroke:#000000;stroke-dasharray:7,5;stroke-width:1}
+		.st10 {fill:none;stroke:none;stroke-width:0.25}
+		.st11 {fill:#000000;font-family:Times New Roman;font-size:0.833336em;font-style:italic}
+		.st12 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Zeichenblatt-1</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="0" v:shadowOffsetX="9" v:shadowOffsetY="-9"/>
+		<g id="group2075-1" transform="translate(0.25,-0.25)" v:mID="2075" v:groupContext="group">
+			<title>Tabelle.2075</title>
+			<g id="group2047-2" v:mID="2047" v:groupContext="group">
+				<title>Tabelle.2047</title>
+				<g id="shape2048-3" v:mID="2048" v:groupContext="shape" transform="translate(38.25,-47.25)">
+					<title>Tabelle.2048</title>
+					<desc>4</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="15.75" cy="72.5" width="31.51" height="0"/>
+					<path d="M0 72.5 L31.5 72.5" class="st1"/>
+					<rect v:rectContext="textBkgnd" x="14.129" y="67.4998" width="3.24207" height="10.6642" class="st2"/>
+					<text x="14.13" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4</text>				</g>
+				<g id="shape2049-8" v:mID="2049" v:groupContext="shape" transform="translate(6.75,-29.25)">
+					<title>Tabelle.2049</title>
+					<desc>2</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="47.25" cy="72.5" width="94.5" height="0"/>
+					<path d="M0 72.5 L94.5 72.5" class="st1"/>
+					<rect v:rectContext="textBkgnd" x="45.4238" y="67.4998" width="3.6524" height="10.6642" class="st4"/>
+					<text x="45.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>2</text>				</g>
+				<g id="shape2050-13" v:mID="2050" v:groupContext="shape" transform="translate(22.1511,-27.5953) rotate(12.2648)">
+					<title>Tabelle.2050</title>
+					<desc>3</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="52.9587" cy="72.5" width="105.92" height="0"/>
+					<path d="M0 72.5 L105.92 72.5" class="st1"/>
+					<rect v:rectContext="textBkgnd" x="51.3817" y="67.4998" width="3.15417" height="10.6642" class="st2"/>
+					<text x="51.38" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>3</text>				</g>
+				<g id="shape2051-18" v:mID="2051" v:groupContext="shape" transform="translate(105.72,-37.6976) rotate(29.7449)">
+					<title>Tabelle.2051</title>
+					<desc>5</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
+					<path d="M0 72.5 L36.28 72.5" class="st5"/>
+					<rect v:rectContext="textBkgnd" x="16.5872" y="67.4998" width="3.10556" height="10.6642" class="st2"/>
+					<text x="16.59" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>5</text>				</g>
+				<g id="shape2052-23" v:mID="2052" v:groupContext="shape" transform="translate(63,-40.5)">
+					<title>Circle.1995</title>
+					<desc>3</desc>
+					<v:userDefs>
+						<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+					<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+					<text x="5.17" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>3</text>				</g>
+				<g id="shape2053-26" v:mID="2053" v:groupContext="shape" transform="translate(-29.2201,-19.6976) rotate(-29.7449)">
+					<title>Tabelle.2053</title>
+					<desc>1</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
+					<path d="M0 72.5 L36.28 72.5" class="st1"/>
+					<rect v:rectContext="textBkgnd" x="16.702" y="67.4998" width="2.87595" height="10.6642" class="st2"/>
+					<text x="16.7" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>				</g>
+				<g id="shape2054-31" v:mID="2054" v:groupContext="shape" transform="translate(31.5,-40.5)">
+					<title>Circle.1997</title>
+					<desc>2</desc>
+					<v:userDefs>
+						<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+					<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+					<text x="4.92" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>2</text>				</g>
+				<g id="shape2055-34" v:mID="2055" v:groupContext="shape" transform="translate(0,-22.5)">
+					<title>Circle.1998</title>
+					<desc>1</desc>
+					<v:userDefs>
+						<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+					<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+					<text x="5.31" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>				</g>
+				<g id="shape2056-37" v:mID="2056" v:groupContext="shape" transform="translate(168.565,16.3242) rotate(68.1986)">
+					<title>Tabelle.2056</title>
+					<desc>6</desc>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="12.1166" cy="72.5" width="24.24" height="0"/>
+					<path d="M0 72.5 L24.23 72.5" class="st1"/>
+					<rect v:rectContext="textBkgnd" x="10.4247" y="67.4998" width="3.38379" height="10.6642" class="st2"/>
+					<text x="10.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>6</text>				</g>
+				<g id="shape2057-42" v:mID="2057" v:groupContext="shape" transform="translate(103.5,1.42109E-14)">
+					<title>Circle.2000</title>
+					<desc>5</desc>
+					<v:userDefs>
+						<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+					<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+					<text x="5.2" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>5</text>				</g>
+				<g id="shape2058-45" v:mID="2058" v:groupContext="shape" transform="translate(94.5,-22.5)">
+					<title>Circle.2001</title>
+					<desc>4</desc>
+					<v:userDefs>
+						<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(0,0,0,0)"/>
+					<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+					<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+					<text x="5.13" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4</text>				</g>
+			</g>
+			<g id="shape2060-48" v:mID="2060" v:groupContext="shape" transform="translate(159.75,-47.25)">
+				<title>Tabelle.2060</title>
+				<desc>4</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="15.75" cy="72.5" width="31.51" height="0"/>
+				<path d="M0 72.5 L31.5 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="14.129" y="67.4998" width="3.24207" height="10.6642" class="st4"/>
+				<text x="14.13" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4</text>			</g>
+			<g id="shape2061-53" v:mID="2061" v:groupContext="shape" transform="translate(146.25,-24.75)">
+				<title>Tabelle.2061</title>
+				<desc>2</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="29.25" cy="72.5" width="58.5" height="0"/>
+				<path d="M0 72.5 L58.5 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="27.4238" y="67.4998" width="3.6524" height="10.6642" class="st4"/>
+				<text x="27.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>2</text>			</g>
+			<g id="shape2062-58" v:mID="2062" v:groupContext="shape" transform="translate(161.186,-23.1949) rotate(11.8887)">
+				<title>Tabelle.2062</title>
+				<desc>3</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="43.6871" cy="72.5" width="87.38" height="0"/>
+				<path d="M0 72.5 L87.37 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="42.11" y="67.4998" width="3.15417" height="10.6642" class="st2"/>
+				<text x="42.11" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>3</text>			</g>
+			<g id="shape2063-63" v:mID="2063" v:groupContext="shape" transform="translate(227.22,-37.6976) rotate(29.7449)">
+				<title>Tabelle.2063</title>
+				<desc>5</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
+				<path d="M0 72.5 L36.28 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="16.5872" y="67.4998" width="3.10556" height="10.6642" class="st2"/>
+				<text x="16.59" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>5</text>			</g>
+			<g id="shape2064-68" v:mID="2064" v:groupContext="shape" transform="translate(184.5,-40.5)">
+				<title>Circle.2006</title>
+				<desc>3</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.17" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>3</text>			</g>
+			<g id="shape2065-71" v:mID="2065" v:groupContext="shape" transform="translate(92.2799,-19.6976) rotate(-29.7449)">
+				<title>Tabelle.2065</title>
+				<desc>1</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
+				<path d="M0 72.5 L36.28 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="16.702" y="67.4998" width="2.87595" height="10.6642" class="st4"/>
+				<text x="16.7" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>			</g>
+			<g id="shape2066-76" v:mID="2066" v:groupContext="shape" transform="translate(153,-40.5)">
+				<title>Circle.2008</title>
+				<desc>2</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="4.92" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>2</text>			</g>
+			<g id="shape2067-79" v:mID="2067" v:groupContext="shape" transform="translate(121.5,-22.5)">
+				<title>Circle.2009</title>
+				<desc>1</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st8"/>
+				<text x="5.31" y="68.25" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>			</g>
+			<g id="shape2068-82" v:mID="2068" v:groupContext="shape" transform="translate(290.065,16.3242) rotate(68.1986)">
+				<title>Tabelle.2068</title>
+				<desc>6</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="12.1166" cy="72.5" width="24.24" height="0"/>
+				<path d="M0 72.5 L24.23 72.5" class="st1"/>
+				<rect v:rectContext="textBkgnd" x="10.4247" y="67.4998" width="3.38379" height="10.6642" class="st2"/>
+				<text x="10.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>6</text>			</g>
+			<g id="shape2069-87" v:mID="2069" v:groupContext="shape" transform="translate(225,-1.42109E-14)">
+				<title>Circle.2011</title>
+				<desc>5</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st6"/>
+				<text x="5.2" y="68.25" class="st7" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>5</text>			</g>
+			<g id="shape2070-90" v:mID="2070" v:groupContext="shape" transform="translate(216,-22.5)">
+				<title>Circle.2012</title>
+				<desc>4&#39;</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st9"/>
+				<text x="4.33" y="68.25" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4&#39;</text>			</g>
+			<g id="shape2071-93" v:mID="2071" v:groupContext="shape" transform="translate(198,-18)">
+				<title>Circle.2013</title>
+				<desc>4</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st9"/>
+				<text x="5.13" y="68.25" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4</text>			</g>
+			<g id="shape2072-96" v:mID="2072" v:groupContext="shape" transform="translate(139.5,-18)">
+				<title>Circle.2014</title>
+				<desc>1&#39;</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="6.75" cy="65.75" width="11.82" height="10.125"/>
+				<path d="M0 65.75 A6.75 6.75 0 0 1 13.5 65.75 A6.75 6.75 0 1 1 0 65.75 Z" class="st8"/>
+				<text x="4.51" y="68.25" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1&#39;</text>			</g>
+			<g id="shape2073-99" v:mID="2073" v:groupContext="shape" transform="translate(0,-58.9606)">
+				<title>Rechteck.2073</title>
+				<desc>OTSP</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(4,4,4,4)"/>
+				<v:textRect cx="58.5" cy="65.9803" width="117" height="13.0394"/>
+				<rect x="0" y="59.4606" width="117" height="13.0394" class="st10"/>
+				<text x="46.55" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OTSP</text>			</g>
+			<g id="shape2074-102" v:mID="2074" v:groupContext="shape" transform="translate(121.5,-58.9606)">
+				<title>Rechteck.2074</title>
+				<desc>OBSP</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(4,4,4,4)"/>
+				<v:textRect cx="58.5" cy="65.9803" width="117" height="13.0394"/>
+				<rect x="0" y="59.4606" width="117" height="13.0394" class="st10"/>
+				<text x="46.28" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OBSP</text>			</g>
+		</g>
+	</g>
+</svg>

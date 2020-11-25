@@ -1,15 +1,17 @@
-function solve_LP(grb_env, data; threads = 1)
+function solve_otsp_lp(grb_env, data, line_statuses; threads = 1)
+
+    lines = Vector{Int64}()
+    for l in case.lines
+        if round(line_statuses[l]) == 1.0
+            push!(lines, l)
+        end
+    end
 
     TS = Model(optimizer_with_attributes(() -> Gurobi.Optimizer(grb_env), "Threads" => 16,  "OutputFlag" => 1))
 
-    lines = Vector{Int64}()
-    for i in 1:length(data.lines)
-        push!(lines, i)
-    end
-
     @variable(TS, generation[data.generators] >= 0)
     @variable(TS, theta[data.buses])
-    @variable(TS, power_flow_var[data.lines])
+    @variable(TS, power_flow_var[lines])
 
     JuMP.fix(theta[data.buses[1]], 0; force = true)
 
@@ -18,10 +20,10 @@ function solve_LP(grb_env, data; threads = 1)
 
     #Current law
     @constraint(TS, market_clearing[n = data.buses],
-    sum(generation[g] for g in data.generators_at_bus[n]) + sum(power_flow_var[l] for l in data.lines_start_at_bus[n]) - sum(power_flow_var[l] for l in data.lines_end_at_bus[n]) == data.bus_demand[n] / data.base_mva)
+    sum(generation[g] for g in data.generators_at_bus[n]) + sum(power_flow_var[l] for l in data.lines_start_at_bus[n] if l in lines) - sum(power_flow_var[l] for l in data.lines_end_at_bus[n] if l in lines) == data.bus_demand[n] / data.base_mva)
 
     #Voltage law
-    @constraint(TS, voltage_1[l = data.lines],
+    @constraint(TS, voltage_1[l = lines],
     (data.base_mva / data.line_reactance[l]) * (theta[data.bus_id[data.line_start[l]]] - theta[data.bus_id[data.line_end[l]]]) == power_flow_var[l])
 
     #Capacity constraint
@@ -32,8 +34,8 @@ function solve_LP(grb_env, data; threads = 1)
     @constraint(TS, theta_limit2[n = data.buses], theta[n] >= THETAMIN)
 
     #Line limit
-    zeta1 = @constraint(TS, power_flow_limit_1[l in data.lines], power_flow_var[l] <= data.line_capacity[l] / data.base_mva)
-    zeta2 = @constraint(TS, power_flow_limit_2[l in data.lines], power_flow_var[l] >= -data.line_capacity[l] / data.base_mva)
+    zeta1 = @constraint(TS, power_flow_limit_1[l in lines], power_flow_var[l] <= data.line_capacity[l] / data.base_mva)
+    zeta2 = @constraint(TS, power_flow_limit_2[l in lines], power_flow_var[l] >= -data.line_capacity[l] / data.base_mva)
 
     optimize!(TS)
     grb_model = backend(TS).optimizer.model.inner

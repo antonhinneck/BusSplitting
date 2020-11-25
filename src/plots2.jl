@@ -20,23 +20,23 @@ rc("font", family = "serif", style = "italic", size = 14)
 rc("text", usetex = true)
 rc("lines", linewidth = 1)
 
-ax = fig.add_axes([0.1,0.15,0.89,0.825])
+ax = fig.add_axes([0.11,0.16,0.885,0.815])
 grid(linewidth = 0.2, linestyle = (0, (10, 10)), color = "lightgray")
 ax.tick_params(direction="in",top=true,right=true,width=1.4)
 
 #ax.set_axisbelow(true)
 #ax.set_yscale("log")
-ylabel("\$z^{*}\$")
+ylabel("\$z^{*} [\\frac{\\\$}{h}] \$")
 xlabel("\$t[s]\$")
 ylim(bottom = 93000, top = 94000)
 ##xlim(left=-5,right=5)
 #x = [0.01 * i for i in -50000:50000]
 
-plot(fotsp_t, fotsp_o, color = "red", mec = "black", mfc = "white", label = "otsp", lw = 1.4, ls = "dashed", marker = "D", ms = 3, mew = 1.5)
-plot(fp_t .+ 80, fp_o, color = "orange", mec = "black", mfc = "white", label = "obsp (otsp sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 3, mew = 1.5)
+plot(fotsp_t, fotsp_o, color = "red", mec = "black", mfc = "white", label = "OTSP", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+plot(fp_t .+ 80, fp_o, color = "orange", mec = "black", mfc = "white", label = "OBSP (OTSP sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
 
-plot(fns_t, fns_o, color = "blue", mec = "gray", mfc = "white", label = "obsp (no start)", lw = 1.4, ls = "dashed", marker = "D", ms = 3, mew = 1.5)
-plot(fs_t, fs_o, color = "lightgreen", mec = "gray", mfc = "white", label = "obsp (lp sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 3, mew = 1.5)
+plot(fns_t, fns_o, color = "blue", mec = "gray", mfc = "white", label = "OBSP (no start)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+plot(fs_t, fs_o, color = "lightgreen", mec = "gray", mfc = "white", label = "OBSP (DCOPF sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
 
 #plot(u_buses, pw(σ_vec), color = "black", mec = "black", mfc = "white", label = "\$\\sigma\$", lw = 1, ls = "dashed", marker = "o", ms = 2.4, mew = 1)
 

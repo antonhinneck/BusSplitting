@@ -11,40 +11,37 @@ THETAMIN = -0.6
 include("Model_LP.jl")
 include("dcopf_otsp.jl")
 include("dcopf_obsp_change.jl")
+include("logger.jl")
 
 # for (i, ds) in enumerate(datasources)
 #     println(i, " ", ds)
 # end
 
-# case = PowerGrids.readDataset(datasources[27]) # 30 Bus as
+# case = PowerGrids.readDataset(datasources[32]) # 30 Bus as
 # for l in case.lines case.line_capacity[l] *= 0.6 end
 #
 # case = PowerGrids.readDataset(datasources[28]) # 30 Bus fsr
 # for l in case.lines case.line_capacity[l] *= 0.8 end
 #
-# case = PowerGrids.readDataset(datasources[29]) # 30 Bus ieee
+# case = PowerGrids.readDataset(datasources[33]) # 30 Bus ieee
 # for l in case.lines case.line_capacity[l] *= 0.9 end
 #
- # case = PowerGrids.readDataset(datasources[5]) # 14 Bus
+ # case = PowerGrids.readDataset(datasources[6]) # 14 Bus
  # for l in case.lines case.line_capacity[l] *= 0.55 end
 #
-# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
+# case = PowerGrids.readDataset(datasources[48]) # 5 Bus
 
-# case = PowerGrids.readDataset(datasources[2]) # 118 Bus ieee
+# case = PowerGrids.readDataset(datasources[3]) # 118 Bus ieee
 # for l in case.lines case.line_capacity[l] *= 0.74 end
 
-# case = PowerGrids.readDataset(datasources[36]) # 57 Bus ieee
+# case = PowerGrids.readDataset(datasources[46]) # 57 Bus ieee
 # for l in case.lines case.line_capacity[l] *= 0.3 end
 
-# case = PowerGrids.readDataset(datasources[15]) # 24 Bus ieee rts
+# case = PowerGrids.readDataset(datasources[18]) # 24 Bus ieee rts
 # for l in case.lines case.line_capacity[l] *= 0.5 end
 
 # case = PowerGrids.readDataset(datasources[11]) # 179 Bus goc
 # for l in case.lines case.line_capacity[l] *= 0.6 end
-
-# case = PowerGrids.readDataset(datasources[38]) # 5 Bus
-
-#case = PowerGrids.readDataset(datasources[28]) # 30 Bus
 
 # case = PowerGrids.readDataset(datasources[29]) # 30 Bus
 #for l in case.lines case.line_capacity[l] *= 0.6 end
@@ -53,9 +50,10 @@ include("dcopf_obsp_change.jl")
 
 #set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
 csv_cases(verbose = true)
-PowerGrids.select_csv_case(48)
+PowerGrids.select_csv_case(53)
 case = PowerGrids.loadCase() # 118 Bus ieee
-#for l in case.lines case.line_capacity[l] *= 0.74 end
+#case.line_capacity[6] = 245.0
+for l in case.lines case.line_capacity[l] *= 0.48 end
 
 include("Model_LP.jl") # Change formulation, error
 lp = solve_LP(ge, case)
@@ -63,18 +61,35 @@ lp_obj = lp[3]
 lp_pf = lp[4]
 lp_gen = lp[6]
 lp_theta = lp[5]
+lp_duals1 = dual.(lp[7][:power_flow_limit_1]).data
+lp_duals2 = dual.(lp[7][:power_flow_limit_2]).data
 
 include("dcopf_otsp.jl")
-otsp = solve_DCOPF_OTSP(case, start = false)
+otsp = solve_DCOPF_OTSP(case)
 otsp_obj = otsp[1]
 otsp_pf = otsp[2] / 100
 otsp_gen = otsp[5] / 100
 otsp_theta = otsp[4]
 otsp_lineStatus = otsp[3]
+log_otsp = otsp[7]
+value.(otsp[6][:power_flow_var])
+
+include("Model_OTSP_LP.jl")
+otspConv = solve_otsp_lp(ge, case, otsp_lineStatus)
+otspConv_duals1 = dual.(otspConv[7][:power_flow_limit_1]).data
+otspConv_duals2 = dual.(otspConv[7][:power_flow_limit_2]).data
+
+#PowerGrids.__splitBus!(case, 1, 2)
 
 for i in 1:length(case.buses)
-    # PowerGrids._splitBus!(case, i, 2)
     PowerGrids.__splitBus!(case, i, 2)
+    #println(length(case.lines_at_bus[i]))
+    # if length(case.lines_at_bus[i]) >= 4
+    #     PowerGrids.__splitBus!(case, i, 2)
+    # #end
+    # else
+    #      PowerGrids.__splitBus!(case, i, 1)
+    # end
 end
 
 case.sub_grids
@@ -84,17 +99,65 @@ case.generators_at_bus[12]
 x0_otsp = split_build_x0(case, otsp[3])
 x0_lp = split_build_x0(case)
 
+
+sol_allActive(case)
+sol_otsp2obsp(case, otsp[3])
+
 case.sub_grids
+
+a = Dict{Int64, Int64}()
+push!(a, 1 => 1)
+push!(a, 2 => 2)
+[i for i in keys(a)]
+
+length([l for l in case.lines if case.line_is_aux[l]])
+
+include("dcopf_obsp_notheta2_sos.jl")
+obsp1 = solve_DCOPF_OBSP2SOS(case)
+obsp2 = solve_DCOPF_OBSP2SOS(case, x0 = PowerGrids.sol_allActive(case), split = 400)
+obsp3 = solve_DCOPF_OBSP2SOS(case, x0 = PowerGrids.sol_otsp2obsp(case, otsp[3]), split = 700)
+
+@inline function opt()
+    csplit = length(obsp3[6]) - 80
+    sol = Vector{Float64}()
+    for l in 1:length(case.lines)
+        if case.line_is_aux[l]
+            push!(sol, obsp3[6][l])
+        else
+            push!(sol, 0.0)
+        end
+    end
+    for i in 1:15
+        nsol = solve_DCOPF_OBSP2SOS(case, x0 = sol, split = csplit)
+        sol = Vector{Float64}()
+        for l in 1:length(case.lines)
+            if case.line_is_aux[l]
+                push!(sol, nsol[6][l])
+            else
+                push!(sol, 0.0)
+            end
+        end
+        csplit -= 10
+    end
+end
+
+opt()
+
+line_status = obsp1[6]
+
+log_obsp1 = obsp1[5]
+log_obsp2 = obsp2[5]
+log_obsp3 = obsp3[5]
 
 include("dcopf_obsp_notheta2.jl")
 line_status = solve_DCOPF_OBSP2(case)
 
 case.sub_grids
-
-include("dcopf_obsp_notheta.jl")
-line_status = solve_DCOPF_OBSP(case)
-line_status = solve_DCOPF_OBSP(case, x0 = x0_otsp, split = 600)
-line_status = solve_DCOPF_OBSP(case, x0 = x0_lp)
+sg = case.sub_grids[3]
+println("--------")
+for l in sg.lines
+    println(string(l," s:",case.line_start[l]," e:",case.line_end[l]," sol:",line_status[3][l]))
+end
 
 case.generators_at_bus[10]
 1 = 1
@@ -102,137 +165,43 @@ case.generators_at_bus[10]
 # include("dcopf_obsp_change.jl")
 # line_status = solve_DCOPF_OBSP(case, x0 = x0)
 
-function dfs_components(pg::PowerGrids.PowerGrid, sg::PowerGrids.sub_grid; l_stat = nothing) # TODO: op_status
 
-    visited = fill(false, length(sg.buses))
-    visited_lines = Vector{Int64}()
-    all_visited = false
-    components = Vector{PowerGrids.sub_grid}()
-    connected_buses = [sg.root_bus]
-    iter = 0
+## Reduction
 
-    while !all_visited #&& iter < 3
 
-        for i in 1:length(visited)
-            if !visited[i]
-                connected_buses = [sg.buses[i]]
-                break
-            end
-        end
+case = PowerGrids.loadCase()
+#for l in case.lines case.line_capacity[l] *= 0.6 end
 
-        _sg = PowerGrids.sub_grid(connected_buses[1], Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Vector{Int64}(), Dict{Int64, Int64}(), Dict{Int64, Dict{Int64, Int64}}())
-
-        while length(connected_buses) > 0
-
-            new_buses = Vector{Int64}()
-            for b in connected_buses
-                push!(_sg.buses, b)
-                for l in pg.lines_at_bus[b]
-                    if l in Set(sg.lines) && !(l in Set(visited_lines)) && round(l_stat[l]) == 1.0
-                        if !(l in Set(visited_lines))
-                            if pg.line_start[l] == b
-                                push!(new_buses, pg.line_end[l])
-                            else
-                                push!(new_buses, pg.line_start[l])
-                            end
-                            push!(_sg.lines, l)
-                            push!(visited_lines, l)
-                        end
-                    end
-                end
-            end
-
-            for (i, b) in enumerate(sg.buses)
-                if b in Set(connected_buses)
-                    visited[i] = true
-                end
-            end
-            connected_buses = deepcopy(new_buses)
-        end
-
-        all_visited = true
-        for v in visited
-            if !v
-                all_visited = false
-                break
-            end
-        end
-        iter += 1
-        #push!(components, _sg)
-        single_connector = false
-        if length(_sg.buses) == 1
-            if (pg.bus_type[_sg.buses[1]] == 3)
-                single_connector = true
-            end
-        end
-
-        if length(_sg.buses) > 1 || single_connector
-            push!(components, _sg)
-        end
-    end
-
-    return components
-end
-
-function reduce_grid(pg::PowerGrids.PowerGrid, pg_id::Int64, l_stat)
-
-    datasources = PowerGrids.datasets()
-    reset_case = PowerGrids.readDataset(datasources[pg_id])
-
-    if pg.sub_grids != nothing
-        for sg in pg.sub_grids
-            components = dfs_components(pg, sg, l_stat = l_stat)
-
-            for (i,c) in enumerate(components)
-                connected_lines = Vector{Int64}()
-
-                for b in c.buses
-                    for l in pg.lines_at_bus[b]
-                        if l in Set(reset_case.lines)
-                            push!(connected_lines, l)
-                        end
-                    end
-                end
-
-                if !(c.root_bus in Set(reset_case.buses))
-
-                    nbid = newBus!(reset_case)
-                    obid = pg.root_bus[c.root_bus]
-
-                    for l in connected_lines
-
-                        if reset_case.line_start[l] == obid
-                            update_line(reset_case, l, nbid, pg.line_end[l])
-                        elseif reset_case.line_end[l] == obid
-                            update_line(reset_case, l, pg.line_start[l], nbid, update_fbus = false)
-                        else
-                            print("Line has no matching start or end.")
-                        end
-                    end
-                    #println(reset_case.lines_at_bus)
-                end
-            end
-        end
-    else
-        print("This function can only be applied after splitBus! has been called.")
-    end
-
-    return reset_case
-end
-
-for l in 7:14
-    if case.line_is_aux[l]
-        println(l," ",x0[l])
-    end
+for i in 1:length(case.buses)
+    __splitBus!(case, i, 2)
 end
 
 case.sub_grids
 
-new = reduce_grid(case, 2, line_status[3])
+include("dcopf_obsp_notheta2.jl")
+line_status = solve_DCOPF_OBSP2(case)
 
-new
+#dfs_components(case, case.sub_grids[1], l_stat = line_status[3])
 
-case.sub_grids[87]
+reduced_case = reduce_grid(case, 48, line_status)
+case.bus_demand[2]
+include("Model_LP.jl") # Change formulation, error
+lpObsp = solve_LP(ge, reduced_case)
+lpObsp_obj = lpObsp[3]
+lpObsp_pf = lpObsp[4]
+lpObsp_gen = lpObsp[6]
+lpObsp_theta = lpObsp[5]
+lpObsp_duals1 = dual.(lpObsp[7][:power_flow_limit_1]).data
+lpObsp_duals2 = dual.(lpObsp[7][:power_flow_limit_2]).data
+
+for l in 1:length(reduced_case.lines)
+    println(string(reduced_case.line_start[l], "  ",reduced_case.line_end[l]))
+end
+
+reduced_case.line_capacity[6]  = 245.0
+for l in 1:length(case.lines)
+    println(string(case.line_start[l], "  ",case.line_end[l]))
+end
 
 function pl(case, id, line_status)
     if !case.line_is_aux[id]
@@ -318,3 +287,38 @@ function construct_initial_solution(data, solution)
 
     return x0
 end
+
+cd(@__DIR__)
+using PyPlot
+
+fig = figure(figsize=(6, 3))
+rc("font", family = "serif", style = "italic", size = 14)
+rc("text", usetex = true)
+rc("lines", linewidth = 1)
+
+ax = fig.add_axes([0.15,0.16,0.84,0.815])
+grid(linewidth = 0.2, linestyle = (0, (10, 10)), color = "lightgray")
+ax.tick_params(direction="in",top=true,right=true,width=1.4)
+
+#ax.set_axisbelow(true)
+#ax.set_yscale("log")
+ylabel("\$z^{*} [\\frac{\\\$}{h}] \$")
+xlabel("\$t[s]\$")
+ylim(bottom = 128700, top = 136000)
+##xlim(left=-5,right=5)
+#x = [0.01 * i for i in -50000:50000]
+
+otspmax = log_otsp.time[length(log_otsp.time)]
+
+plot(log_otsp.time, log_otsp.bstobj, color = "red", mec = "black", mfc = "white", label = "OTSP", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+plot(log_obsp3.time .+ otspmax, log_obsp3.bstobj, color = "orange", mec = "black", mfc = "white", label = "OBSP (OTSP sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+#
+plot(log_obsp1.time, log_obsp1.bstobj, color = "blue", mec = "gray", mfc = "white", label = "OBSP (no start)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+plot(log_obsp2.time, log_obsp2.bstobj, color = "lightgreen", mec = "gray", mfc = "white", label = "OBSP (DCOPF sol.)", lw = 1.4, ls = "dashed", marker = "D", ms = 2, mew = 1.0)
+
+#plot(u_buses, pw(σ_vec), color = "black", mec = "black", mfc = "white", label = "\$\\sigma\$", lw = 1, ls = "dashed", marker = "o", ms = 2.4, mew = 1)
+
+legend(loc = "upper right", fancybox=false, edgecolor="black")
+savefig(string("73bus.pdf"), format = :pdf)
+
+log_otsp
