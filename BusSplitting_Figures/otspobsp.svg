@@ -44,7 +44,7 @@
 					<v:textBlock v:margins="rect(0,0,0,0)"/>
 					<v:textRect cx="47.25" cy="72.5" width="94.5" height="0"/>
 					<path d="M0 72.5 L94.5 72.5" class="st1"/>
-					<rect v:rectContext="textBkgnd" x="45.4238" y="67.4998" width="3.6524" height="10.6642" class="st4"/>
+					<rect v:rectContext="textBkgnd" x="45.4238" y="67.4998" width="3.6524" height="10.6642" class="st2"/>
 					<text x="45.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>2</text>				</g>
 				<g id="shape2050-13" v:mID="2050" v:groupContext="shape" transform="translate(22.1511,-27.5953) rotate(12.2648)">
 					<title>Tabelle.2050</title>
@@ -52,7 +52,7 @@
 					<v:textBlock v:margins="rect(0,0,0,0)"/>
 					<v:textRect cx="52.9587" cy="72.5" width="105.92" height="0"/>
 					<path d="M0 72.5 L105.92 72.5" class="st1"/>
-					<rect v:rectContext="textBkgnd" x="51.3817" y="67.4998" width="3.15417" height="10.6642" class="st2"/>
+					<rect v:rectContext="textBkgnd" x="51.3817" y="67.4998" width="3.15417" height="10.6642" class="st4"/>
 					<text x="51.38" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>3</text>				</g>
 				<g id="shape2051-18" v:mID="2051" v:groupContext="shape" transform="translate(105.72,-37.6976) rotate(29.7449)">
 					<title>Tabelle.2051</title>
@@ -60,7 +60,7 @@
 					<v:textBlock v:margins="rect(0,0,0,0)"/>
 					<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
 					<path d="M0 72.5 L36.28 72.5" class="st5"/>
-					<rect v:rectContext="textBkgnd" x="16.5872" y="67.4998" width="3.10556" height="10.6642" class="st2"/>
+					<rect v:rectContext="textBkgnd" x="16.5872" y="67.4998" width="3.10556" height="10.6642" class="st4"/>
 					<text x="16.59" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>5</text>				</g>
 				<g id="shape2052-23" v:mID="2052" v:groupContext="shape" transform="translate(63,-40.5)">
 					<title>Circle.1995</title>
@@ -135,7 +135,7 @@
 				<v:textBlock v:margins="rect(0,0,0,0)"/>
 				<v:textRect cx="15.75" cy="72.5" width="31.51" height="0"/>
 				<path d="M0 72.5 L31.5 72.5" class="st1"/>
-				<rect v:rectContext="textBkgnd" x="14.129" y="67.4998" width="3.24207" height="10.6642" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="14.129" y="67.4998" width="3.24207" height="10.6642" class="st2"/>
 				<text x="14.13" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>4</text>			</g>
 			<g id="shape2061-53" v:mID="2061" v:groupContext="shape" transform="translate(146.25,-24.75)">
 				<title>Tabelle.2061</title>
@@ -177,7 +177,7 @@
 				<v:textBlock v:margins="rect(0,0,0,0)"/>
 				<v:textRect cx="18.1401" cy="72.5" width="36.29" height="0"/>
 				<path d="M0 72.5 L36.28 72.5" class="st1"/>
-				<rect v:rectContext="textBkgnd" x="16.702" y="67.4998" width="2.87595" height="10.6642" class="st4"/>
+				<rect v:rectContext="textBkgnd" x="16.702" y="67.4998" width="2.87595" height="10.6642" class="st2"/>
 				<text x="16.7" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1</text>			</g>
 			<g id="shape2066-76" v:mID="2066" v:groupContext="shape" transform="translate(153,-40.5)">
 				<title>Circle.2008</title>
@@ -205,7 +205,7 @@
 				<v:textBlock v:margins="rect(0,0,0,0)"/>
 				<v:textRect cx="12.1166" cy="72.5" width="24.24" height="0"/>
 				<path d="M0 72.5 L24.23 72.5" class="st1"/>
-				<rect v:rectContext="textBkgnd" x="10.4247" y="67.4998" width="3.38379" height="10.6642" class="st2"/>
+				<rect v:rectContext="textBkgnd" x="10.4247" y="67.4998" width="3.38379" height="10.6642" class="st4"/>
 				<text x="10.42" y="75" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>6</text>			</g>
 			<g id="shape2069-87" v:mID="2069" v:groupContext="shape" transform="translate(225,-1.42109E-14)">
 				<title>Circle.2011</title>
@@ -249,24 +249,24 @@
 				<text x="4.51" y="68.25" class="st3" v:langID="1033"><v:paragraph v:spLine="-1" v:horizAlign="1"/><v:tabList/>1&#39;</text>			</g>
 			<g id="shape2073-99" v:mID="2073" v:groupContext="shape" transform="translate(0,-58.9606)">
 				<title>Rechteck.2073</title>
-				<desc>OTSP</desc>
+				<desc>OTS</desc>
 				<v:userDefs>
 					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
 				</v:userDefs>
 				<v:textBlock v:margins="rect(4,4,4,4)"/>
 				<v:textRect cx="58.5" cy="65.9803" width="117" height="13.0394"/>
 				<rect x="0" y="59.4606" width="117" height="13.0394" class="st10"/>
-				<text x="46.55" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OTSP</text>			</g>
+				<text x="49.61" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OTS</text>			</g>
 			<g id="shape2074-102" v:mID="2074" v:groupContext="shape" transform="translate(121.5,-58.9606)">
 				<title>Rechteck.2074</title>
-				<desc>OBSP</desc>
+				<desc>OBS</desc>
 				<v:userDefs>
 					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
 				</v:userDefs>
 				<v:textBlock v:margins="rect(4,4,4,4)"/>
 				<v:textRect cx="58.5" cy="65.9803" width="117" height="13.0394"/>
 				<rect x="0" y="59.4606" width="117" height="13.0394" class="st10"/>
-				<text x="46.28" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OBSP</text>			</g>
+				<text x="49.33" y="68.98" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>OBS</text>			</g>
 		</g>
 	</g>
 </svg>

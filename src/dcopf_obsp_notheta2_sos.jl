@@ -104,7 +104,7 @@ function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
 
     @constraint(TS, theta1[l = data.lines; data.line_is_aux[l]],
     theta[data.line_start[l]] <= theta[data.line_end[l]] + (1 - switched[l]) * M2)
-
+    #
     @constraint(TS, theta2[l = data.lines; data.line_is_aux[l]],
     theta[data.line_start[l]] + (1 - switched[l]) * M2 >= theta[data.line_end[l]])
 
@@ -115,8 +115,8 @@ function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
     @constraint(TS, production_capacity[g = data.generators], generation[g] <= data.generator_capacity_max[g])
 
     #Angle limits
-    @constraint(TS, theta_limit_1[n = buses], theta[n] <= THETAMAX)
-    @constraint(TS, theta_limit_2[n = buses], theta[n] >= THETAMIN)
+    # @constraint(TS, theta_limit_1[n = buses], theta[n] <= THETAMAX)
+    # @constraint(TS, theta_limit_2[n = buses], theta[n] >= THETAMIN)
 
     # #Line limit
     @constraint(TS, power_flow_limit_1[l in data.lines; data.line_is_aux[l]], power_flow_var[l] <= data.line_capacity[l] * switched[l])
@@ -140,6 +140,18 @@ function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
     end
 
     optimize!(TS)
+    println("------------------")
+    println(termination_status(TS))
+
+    println(computeIIS(grb_model))
+    Gurobi.write_model(grb_model, "model.ilp")
+    Gurobi.write_model(grb_model, "model.lp")
+    Gurobi.write_model(grb_model, "model.mps")
+    map_optimizer_constraints(TS)[14]
+    print(index(TS[:market_clearing][14]))
+    print(optimizer_index(TS[:power_flow_limit_1][]))
+
+    # grb_model.write("model.ilp")
 
     # lineStateDict = Dict{Int64, Float64}()
     #

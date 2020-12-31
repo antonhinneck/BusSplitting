@@ -12,6 +12,7 @@ include("Model_LP.jl")
 include("dcopf_otsp.jl")
 include("dcopf_obsp_change.jl")
 include("logger.jl")
+include("jmp_access.jl")
 
 # for (i, ds) in enumerate(datasources)
 #     println(i, " ", ds)
@@ -50,10 +51,12 @@ include("logger.jl")
 
 #set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
 csv_cases(verbose = true)
-PowerGrids.select_csv_case(53)
+PowerGrids.select_csv_case(48)
 case = PowerGrids.loadCase() # 118 Bus ieee
 #case.line_capacity[6] = 245.0
-for l in case.lines case.line_capacity[l] *= 0.48 end
+for l in case.lines case.line_capacity[l] *= 1.0 end
+
+case.line_capacity
 
 include("Model_LP.jl") # Change formulation, error
 lp = solve_LP(ge, case)
@@ -65,7 +68,7 @@ lp_duals1 = dual.(lp[7][:power_flow_limit_1]).data
 lp_duals2 = dual.(lp[7][:power_flow_limit_2]).data
 
 include("dcopf_otsp.jl")
-otsp = solve_DCOPF_OTSP(case)
+otsp = solve_DCOPF_OTSP(case, start = true)
 otsp_obj = otsp[1]
 otsp_pf = otsp[2] / 100
 otsp_gen = otsp[5] / 100
@@ -92,7 +95,14 @@ for i in 1:length(case.buses)
     # end
 end
 
-case.sub_grids
+cou = 0
+for l in case.lines
+    if case.line_is_aux[l]
+        global cou += 1
+    end
+end
+cou
+case.lines
 
 case.generators_at_bus[12]
 
@@ -111,6 +121,25 @@ push!(a, 2 => 2)
 [i for i in keys(a)]
 
 length([l for l in case.lines if case.line_is_aux[l]])
+
+
+buses_w_d = Dict()
+for b in case.buses
+    if case.bus_demand[b] == 80.0
+        push!(buses_w_d, b => case.bus_demand[b])
+    end
+end
+lines_cap = Dict()
+for l in case.lines
+    if case.line_capacity[l] == 8000.0
+        push!(buses_w_d, l => case.line_capacity[l])
+    end
+end
+print(buses_w_d)
+println(lines_cap)
+
+case.generator_capacity_max
+case.line_capacity
 
 include("dcopf_obsp_notheta2_sos.jl")
 obsp1 = solve_DCOPF_OBSP2SOS(case)
