@@ -1,3 +1,6 @@
+logger = Logger(0, Vector{Float64}(), Vector{Float64}(), Vector{Float64}(), Vector{Float64}())
+last = -1.0
+
 function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
 
     M = 10000
@@ -47,24 +50,6 @@ function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
             end
         end
         return SOSindicators
-    end
-
-    logger = Logger(0, Vector{Float64}(), Vector{Float64}(), Vector{Float64}(), Vector{Float64}())
-    last = -2.0
-    @inline function logger_callback(cbdata::CallbackData, where::Cint)
-
-        # Saving progress
-        #----------------
-        if where == convert(Cint, Gurobi.CB_MIPNODE)
-            if Gurobi.cbget_runtime(cbdata, where) - last > 2
-                inc = Gurobi.cbget_mipnode_objbst(cbdata, where)
-                lb = Gurobi.cbget_mipnode_objbnd(cbdata, where)
-                time = Gurobi.cbget_runtime(cbdata, where)
-                src = 0.0
-                save(logger, [inc, lb, time, src])
-                last = time
-            end
-        end
     end
 
     SOSindicators = _SOSindicators()
@@ -125,31 +110,55 @@ function solve_DCOPF_OBSP2SOS(data; x0 = nothing, split = nothing)
     @constraint(TS, power_flow_limit_4[l in data.lines; !data.line_is_aux[l]], power_flow_var[l] >= -data.line_capacity[l])
 
     MOIU.attach_optimizer(TS)
-    grb_model = backend(TS).optimizer.model.inner
-    Gurobi.set_callback_func!(grb_model, logger_callback)
-    update_model!(grb_model)
-    #println(grb_model)
+    grb_model = backend(TS).optimizer.model
+
+    cb_wrapper_c = @cfunction(function cb_wrapper(
+        model_pointer::Ptr{Cvoid}, cbdata::Ptr{Cvoid}, 
+        where::Cint, 
+        user_data_pointer::Ptr{Cvoid})
+            # Saving progress
+            #----------------
+            if where == convert(Cint, Gurobi.GRB_CB_MIPNODE);
+                time = Ref{Cdouble}()
+                Gurobi.GRBcbget(cbdata, where, GRB_CB_RUNTIME, time)
+                if time[] - last > 1
+                    inc = Ref{Cdouble}()
+                    lb = Ref{Cdouble}()
+                    Gurobi.GRBcbget(cbdata, where, GRB_CB_MIPNODE_OBJBST, inc)
+                    Gurobi.GRBcbget(cbdata, where, GRB_CB_MIPNODE_OBJBND, lb)
+                    src = 0.0
+                    save(logger, [inc[], lb[], time[], src])
+                    global last = time[]
+                end
+            end
+            return Cint(0)
+        end,
+        Cint, (Ptr{Cvoid}, Ptr{Cvoid}, Cint, Ptr{Cvoid}))
+    Gurobi.GRBsetcallbackfunc(grb_model, cb_wrapper_c, C_NULL)
 
     if x0 != nothing
         for l in data.lines
             if data.line_is_aux[l]
                 grb_idx = TS.moi_backend.model_to_optimizer_map[index(switched[l])].value
-                Gurobi.set_dblattrelement!(grb_model, "Start", grb_idx, x0[l])
+                Gurobi.GRBsetdblattrelement(grb_model, "Start", grb_idx, x0[l])
             end
         end
     end
 
-    optimize!(TS)
+    Gurobi.GRBupdatemodel(grb_model)
+    #optimize!(TS)
+
+    Gurobi.GRBoptimize(grb_model)
     println("------------------")
     println(termination_status(TS))
 
-    println(computeIIS(grb_model))
-    Gurobi.write_model(grb_model, "model.ilp")
-    Gurobi.write_model(grb_model, "model.lp")
-    Gurobi.write_model(grb_model, "model.mps")
-    map_optimizer_constraints(TS)[14]
-    print(index(TS[:market_clearing][14]))
-    print(optimizer_index(TS[:power_flow_limit_1][]))
+    # println(Gurobi.GRBcomputeIIS(grb_model))
+    # Gurobi.GRBwrite(grb_model, "model.ilp")
+    # Gurobi.GRBwrite(grb_model, "model.lp")
+    # Gurobi.GRBwrite(grb_model, "model.mps")
+    #map_optimizer_constraints(TS)[14]
+    #print(index(TS[:market_clearing][14]))
+    #print(optimizer_index(TS[:power_flow_limit_1][]))
 
     # grb_model.write("model.ilp")
 

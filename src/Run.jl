@@ -1,17 +1,22 @@
 using JuMP, Gurobi, MathOptInterface.Utilities
 using MathOptInterface ## Cbc, GLPK, HTTP, JSON
-include("C:/Users/Anton Hinneck/juliaPackages/GitHub/PowerGrids.jl/src/PowerGrids.jl")
+include("/home/anton_hinneck/projects/github/PowerGrids.jl/src/PowerGrids.jl")
 using LightGraphs.SimpleGraphs: nv, ne
+using MathOptInterface: set
 using .PowerGrids
+
+Base.cconvert(::Type{Ptr{Cvoid}}, x::Gurobi.CallbackData) = x
+Base.unsafe_convert(::Type{Ptr{Cvoid}}, x::Gurobi.CallbackData) = x.ptr::Ptr{Cvoid}
+Base.broadcastable(x::Gurobi.CallbackData) = Ref(x)
 
 ge = Gurobi.Env()
 THETAMAX = 0.6
 THETAMIN = -0.6
 
+include("logger.jl")
 include("Model_LP.jl")
 include("dcopf_otsp.jl")
 include("dcopf_obsp_change.jl")
-include("logger.jl")
 include("jmp_access.jl")
 
 # for (i, ds) in enumerate(datasources)
@@ -49,16 +54,33 @@ include("jmp_access.jl")
 
 # case = readDataset(datasources[38]) # 5 Bus
 
-#set_csv_path("C:/Users/Anton Hinneck/Documents/Git/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
+set_csv_path("/home/anton_hinneck/projects/github/pglib2csv/pglib/2020-08-21.19-54-30-275/csv")
 csv_cases(verbose = true)
-PowerGrids.select_csv_case(48)
-case = PowerGrids.loadCase() # 118 Bus ieee
-#case.line_capacity[6] = 245.0
-for l in case.lines case.line_capacity[l] *= 1.0 end
+PowerGrids.select_csv_case(3)
+case = PowerGrids.loadCase()
+for l in case.lines case.line_capacity[l] *= 0.76 end
 
-case.line_capacity
+# mymod = Model(optimizer_with_attributes(() -> Gurobi.Optimizer(), "Threads" => 16,  "OutputFlag" => 1))
+# @variable(mymod, x[1:100] >= 0)
+# @objective(mymod, Min, sum(x))
+# @constraint(mymod, con[i in 1:100], x[i] >= i)
+# JuMP.MOIU.attach_optimizer(mymod)
+# mygmod = backend(mymod).optimizer.model
 
-include("Model_LP.jl") # Change formulation, error
+# fc = @cfunction(function mycb1(model_pointer::Ptr{Cvoid}, cbdata::Ptr{Cvoid}, where::Cint,
+# user_data_pointer::Ptr{Cvoid}) println("mip"); return Cint(0) end, Cint, (Ptr{Cvoid}, Ptr{Cvoid}, Cint, Ptr{Cvoid}))
+
+# Gurobi.GRBsetcallbackfunc(mygmod, fc, C_NULL)
+# Gurobi.GRBupdatemodel(mygmod)
+# Gurobi.GRBoptimize(mygmod)
+# JuMP.optimize!(mymod)
+
+# runtime = Ref{Cdouble}()
+# Gurobi.GRBgetdblattr(mygmod, "RunTime", runtime)
+# runtime = runtime[]
+# println(runtime)
+
+include("Model_LP.jl")
 lp = solve_LP(ge, case)
 lp_obj = lp[3]
 lp_pf = lp[4]
@@ -82,69 +104,60 @@ otspConv = solve_otsp_lp(ge, case, otsp_lineStatus)
 otspConv_duals1 = dual.(otspConv[7][:power_flow_limit_1]).data
 otspConv_duals2 = dual.(otspConv[7][:power_flow_limit_2]).data
 
-#PowerGrids.__splitBus!(case, 1, 2)
-
 for i in 1:length(case.buses)
     PowerGrids.__splitBus!(case, i, 2)
-    #println(length(case.lines_at_bus[i]))
-    # if length(case.lines_at_bus[i]) >= 4
-    #     PowerGrids.__splitBus!(case, i, 2)
-    # #end
-    # else
-    #      PowerGrids.__splitBus!(case, i, 1)
-    # end
 end
-
-cou = 0
-for l in case.lines
-    if case.line_is_aux[l]
-        global cou += 1
-    end
-end
-cou
-case.lines
-
-case.generators_at_bus[12]
 
 x0_otsp = split_build_x0(case, otsp[3])
 x0_lp = split_build_x0(case)
 
-
-sol_allActive(case)
-sol_otsp2obsp(case, otsp[3])
-
-case.sub_grids
-
-a = Dict{Int64, Int64}()
-push!(a, 1 => 1)
-push!(a, 2 => 2)
-[i for i in keys(a)]
-
-length([l for l in case.lines if case.line_is_aux[l]])
-
-
-buses_w_d = Dict()
-for b in case.buses
-    if case.bus_demand[b] == 80.0
-        push!(buses_w_d, b => case.bus_demand[b])
-    end
-end
-lines_cap = Dict()
-for l in case.lines
-    if case.line_capacity[l] == 8000.0
-        push!(buses_w_d, l => case.line_capacity[l])
-    end
-end
-print(buses_w_d)
-println(lines_cap)
-
-case.generator_capacity_max
-case.line_capacity
+# PowerGrids.sol_allActive(case)
+# PowerGrids.sol_otsp2obsp(case, otsp[3])
 
 include("dcopf_obsp_notheta2_sos.jl")
 obsp1 = solve_DCOPF_OBSP2SOS(case)
-obsp2 = solve_DCOPF_OBSP2SOS(case, x0 = PowerGrids.sol_allActive(case), split = 400)
-obsp3 = solve_DCOPF_OBSP2SOS(case, x0 = PowerGrids.sol_otsp2obsp(case, otsp[3]), split = 700)
+obsp2 = solve_DCOPF_OBSP2SOS(case, x0 = x0_lp, split = 500)
+obsp3 = solve_DCOPF_OBSP2SOS(case, x0 = x0_otsp, split = 500)
+
+# cou = 0
+# for l in case.lines
+#     if case.line_is_aux[l]
+#         global cou += 1
+#     end
+# end
+# cou
+# case.lines
+
+# case.generators_at_bus[12]
+
+# case.sub_grids
+
+# a = Dict{Int64, Int64}()
+# push!(a, 1 => 1)
+# push!(a, 2 => 2)
+# [i for i in keys(a)]
+
+# length([l for l in case.lines if case.line_is_aux[l]])
+
+# buses_w_d = Dict()
+# for b in case.buses
+#     if case.bus_demand[b] == 80.0
+#         push!(buses_w_d, b => case.bus_demand[b])
+#     end
+# end
+
+# lines_cap = Dict()
+# for l in case.lines
+#     if case.line_capacity[l] == 8000.0
+#         push!(buses_w_d, l => case.line_capacity[l])
+#     end
+# end
+
+# print(buses_w_d)
+# println(lines_cap)
+
+# case.generator_capacity_max
+# case.line_capacity
 
 @inline function opt()
     csplit = length(obsp3[6]) - 80
@@ -177,6 +190,7 @@ line_status = obsp1[6]
 log_obsp1 = obsp1[5]
 log_obsp2 = obsp2[5]
 log_obsp3 = obsp3[5]
+log_otsp
 
 include("dcopf_obsp_notheta2.jl")
 line_status = solve_DCOPF_OBSP2(case)
@@ -333,7 +347,7 @@ ax.tick_params(direction="in",top=true,right=true,width=1.4)
 #ax.set_yscale("log")
 ylabel("\$z^{*} [\\frac{\\\$}{h}] \$")
 xlabel("\$t[s]\$")
-ylim(bottom = 128700, top = 136000)
+ylim(bottom = 92500, top = 100000)
 ##xlim(left=-5,right=5)
 #x = [0.01 * i for i in -50000:50000]
 
@@ -348,6 +362,4 @@ plot(log_obsp2.time, log_obsp2.bstobj, color = "lightgreen", mec = "gray", mfc =
 #plot(u_buses, pw(σ_vec), color = "black", mec = "black", mfc = "white", label = "\$\\sigma\$", lw = 1, ls = "dashed", marker = "o", ms = 2.4, mew = 1)
 
 legend(loc = "upper right", fancybox=false, edgecolor="black")
-savefig(string("73bus.pdf"), format = :pdf)
-
-log_otsp
+savefig(string("logs.pdf"), format = :pdf)

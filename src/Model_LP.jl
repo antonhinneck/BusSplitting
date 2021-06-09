@@ -37,7 +37,11 @@ function solve_LP(grb_env, data; threads = 1)
 
     optimize!(TS)
     grb_model = backend(TS).optimizer.model.inner
-    time = Gurobi.get_runtime(grb_model)
+    
+    time = Ref{Cdouble}()
+    Gurobi.GRBgetdblattr(grb_model, "RunTime", time)
+    time = time[]
+
     status = termination_status(TS)
     objective = 0.0
     solution = [0.0]

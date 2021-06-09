@@ -38,8 +38,12 @@ function solve_otsp_lp(grb_env, data, line_statuses; threads = 1)
     zeta2 = @constraint(TS, power_flow_limit_2[l in lines], power_flow_var[l] >= -data.line_capacity[l] / data.base_mva)
 
     optimize!(TS)
-    grb_model = backend(TS).optimizer.model.inner
-    time = Gurobi.get_runtime(grb_model)
+    grb_model = backend(TS).optimizer.model
+
+    time = Ref{Cdouble}()
+    Gurobi.GRBgetdblattr(grb_model, "RunTime", time)
+    time = time[]
+
     status = termination_status(TS)
     objective = 0.0
     solution = [0.0]
